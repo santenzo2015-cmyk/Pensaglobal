@@ -725,7 +725,9 @@ a.btn{text-decoration:none;display:inline-block}
   // SHEET_CSV_URL: enlace de la planilla de respuestas publicada como CSV (Archivo > Compartir > Publicar en la web).
   // Si los dejás vacíos, la sección muestra perfiles de ejemplo.
   var FORM_URL = "";
-  var SHEET_CSV_URL = "";
+  var SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQTpVZVKR_-E-uu6g-4llkZQ6k6Nr7ezCl5iV0z0gxuRzHUj0WYuvSFrg2VwU10GYGSs8VpqQThvgdb/pub?gid=0&single=true&output=csv";
+  // TALENT_ENDPOINT: dirección de tu Apps Script (ver ARMAR-TALENTOS.txt). Con eso el bot manda la ficha directo a la planilla.
+  var TALENT_ENDPOINT = "https://script.google.com/macros/s/AKfycbx2bL2t9kj1WmDOBVloopU1WP_tA-ZT12JaTtG07-cCYduDQ2LIwG0vKTPjTFvCPFU/exec";
   // ITEMS_CSV_URL: enlace de tu planilla de OPORTUNIDADES publicada como CSV. Si lo dejás vacío, se usan solo las de este archivo.
   // Las filas nuevas de la planilla se suman solas, sin volver a subir la página.
   var ITEMS_CSV_URL = "";
@@ -1380,7 +1382,7 @@ a.btn{text-decoration:none;display:inline-block}
     var rows = parseCSV(text); if (rows.length < 2) return [];
     var head = rows[0].map(function(h){return norm(h);});
     function ix(k){ for (var i = 0; i < head.length; i++) { if (head[i].indexOf(k) > -1) return i; } return -1; }
-    var c = {n:ix("nombre"), f:ix("foto"), h:ix("titular"), l:ix("ubicacion"), s:ix("resumen"), x:ix("experiencia"), a:ix("areas"), i:ix("idiomas"), li:ix("linkedin"), ok:ix("aprobado")};
+    var c = {n:ix("nombre"), f:ix("foto"), h:(ix("titular")>-1?ix("titular"):ix("titulo")), l:ix("ubicacion"), s:ix("resumen"), x:ix("experiencia"), a:ix("areas"), i:ix("idiomas"), li:ix("linkedin"), ok:ix("aprobado")};
     if (c.ok < 0 || c.n < 0) return [];
     var out = [];
     for (var r = 1; r < rows.length; r++) {
@@ -1687,6 +1689,14 @@ a.btn{text-decoration:none;display:inline-block}
     form.addEventListener("submit", function(e){ e.preventDefault(); var t = inp.value.trim(); if (!t) return; inp.value = ""; say("me", t); if (fin) { say("bot", "Usá los botones de abajo, o «Empezar de nuevo»."); return; } handle(t); });
     qr.addEventListener("click", function(e){
       var b = e.target.closest("[data-v]"); if (!b) return; var v = b.getAttribute("data-v");
+      if (v === "send" && safeUrl(TALENT_ENDPOINT)) {
+        var payload = {n:D.n, h:D.h, l:D.l, s:D.s, x:(D.x||[]).join("; "), a:(D.a||[]).join(", "), i:(D.i||[]).join(", "), li:D.li||"", permiso:"si"};
+        say("bot", "Enviando tu ficha…");
+        fetch(safeUrl(TALENT_ENDPOINT), {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(payload)})
+          .then(function(){ say("bot", "Listo, recibimos tu ficha. La revisamos y, si todo está bien, aparece en Talentos. Gracias por sumarte."); chips([]); })
+          .catch(function(){ say("bot", "No pudimos enviarla ahora. Probá de nuevo o copiá la ficha."); chips([["Reintentar", "send"], ["Copiar ficha", "copy"]]); });
+        return;
+      }
       if (v === "send") { var mail = String(INBOX_EMAIL || "").trim(); window.location.href = "mailto:" + mail + "?subject=" + encodeURIComponent("Nuevo talento: " + D.n) + "&body=" + encodeURIComponent(textOut()); say("bot", "Se abrió tu programa de mail con la ficha lista. Enviála y la revisamos antes de publicarla. Gracias por sumarte."); return; }
       if (v === "copy") { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(textOut()).then(function(){ toast("Ficha copiada"); }, function(){ toast("No se pudo copiar"); }); return; }
       if (v === "reset") { start(); return; }
