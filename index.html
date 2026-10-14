@@ -476,6 +476,19 @@ a.btn{text-decoration:none;display:inline-block}
 .ag-form input{flex:1;min-width:0;border:1px solid var(--rule);border-radius:999px;padding:.65rem 1rem;background:var(--paper);color:var(--ink);font:inherit}
 .ag-form .btn{border-radius:999px;padding:.65rem 1.2rem}
 
+
+/* pestaña de carreras */
+.career-btn{background:var(--stamp);color:#fff;border-radius:999px;padding:.45rem .95rem;font-weight:700;font-size:.95rem;gap:.55rem;box-shadow:0 2px 0 rgba(0,0,0,.18)}
+.career-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.career-k{font:600 .66rem var(--font-mono);letter-spacing:.08em;text-transform:uppercase;opacity:.85;padding-right:.55rem;border-right:1px solid rgba(255,255,255,.5)}
+.career-pop{min-width:17rem}
+.career-pop button{justify-content:space-between;font-weight:500}
+.career-pop button[aria-current="true"]{background:var(--tint);font-weight:700}
+.career-pop button[aria-disabled="true"]{color:var(--ink-2)}
+.career-pop .cp-soon{font:500 .68rem var(--font-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2);border:1px solid var(--rule);border-radius:999px;padding:.1rem .5rem}
+.career-pop .cp-here{font:600 .68rem var(--font-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--stamp)}
+.career-k{display:none}
+@media (min-width:721px){.hs{flex-basis:200px;min-width:160px}.hs input{width:0}}
 /* suscripción arriba, siempre visible */
 .subbar{position:relative;background:var(--indigo);color:var(--on-indigo)}
 .subbar-btn{display:flex;align-items:center;justify-content:center;gap:.55rem;width:100%;padding:.5rem 1rem;background:none;border:0;color:inherit;font:inherit;font-weight:600;font-size:.9rem;cursor:pointer}
@@ -677,6 +690,7 @@ a.btn{text-decoration:none;display:inline-block}
       <b>Pensá Global</b>
     </div>
     <nav class="nav" aria-label="Secciones">
+      <details class="menu career-menu" id="careerMenu"><summary class="career-btn" aria-label="Elegir carrera"><span class="career-k">Carrera</span><span id="careerName">Relaciones Internacionales</span><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><div class="menu-pop career-pop" id="careerPop" role="menu"></div></details>
       <details class="menu" id="menu"><summary class="navb">Explorá <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><div class="menu-pop" id="menuPop"></div></details>
       <button class="navb" type="button" data-to="talentos">Talentos</button>
       <button class="navb" type="button" data-to="agregar">Agregar</button>
@@ -737,10 +751,7 @@ a.btn{text-decoration:none;display:inline-block}
           <select id="country"></select>
         </div>
         <div class="field"><label for="career">Carrera</label>
-          <select id="career">
-            <option value="rrii" selected>Relaciones Internacionales</option>
-            <option disabled>Más carreras, próximamente</option>
-          </select>
+          <select id="career"></select>
         </div>
         <div class="field"><label for="stage">Mi etapa</label>
           <select id="stage">
@@ -780,7 +791,7 @@ a.btn{text-decoration:none;display:inline-block}
         <div>
           <p class="eyebrow">Talentos</p>
           <h2 class="h2" id="tal-h">Quiénes estudian y trabajan en Relaciones Internacionales</h2>
-          <p class="sub">Perfiles de estudiantes y licenciados de la carrera. Mirá qué hicieron, dónde trabajaron y escribiles por LinkedIn.</p>
+          <p class="sub" id="talSub">Perfiles de estudiantes y licenciados de la carrera. Mirá qué hicieron, dónde trabajaron y escribiles por LinkedIn.</p>
         </div>
         <div class="join" id="join"></div>
       </div>
@@ -828,7 +839,7 @@ a.btn{text-decoration:none;display:inline-block}
   <section class="study" aria-labelledby="mat-h">
     <div class="wrap">
       <h2 class="h2" id="mat-h">Qué se estudia en la carrera</h2>
-      <p class="sub">Los ejes que se repiten en la mayoría de los planes de Relaciones Internacionales. Cada universidad ordena y nombra las materias a su manera, así que mirá el plan de estudios en su sitio.</p>
+      <p class="sub" id="studySub">Los ejes que se repiten en la mayoría de los planes de Relaciones Internacionales. Cada universidad ordena y nombra las materias a su manera, así que mirá el plan de estudios en su sitio.</p>
       <div class="axes" id="axes"></div>
     </div>
   </section>
@@ -837,7 +848,7 @@ a.btn{text-decoration:none;display:inline-block}
 <footer class="foot">
   <div class="wrap">
     <p>Pensá Global reúne enlaces a fuentes oficiales. Programas, requisitos y fechas cambian, así que confirmalos en el sitio de cada institución antes de postular.</p>
-    <p>Lista armada en octubre de 2026. Hoy cubre Relaciones Internacionales en Argentina, con México y España en camino.</p>
+    <p id="footCover">Lista armada en octubre de 2026. Hoy cubre Relaciones Internacionales y Derecho en Argentina, con México y España en camino.</p>
     <p><strong>Privacidad.</strong> Esta página no pide registro. Tus oportunidades guardadas y el país que elegiste quedan solo en tu navegador. Las tipografías se cargan desde Google Fonts.</p>
     <p id="contactLine" hidden></p>
   </div>
@@ -1026,12 +1037,42 @@ a.btn{text-decoration:none;display:inline-block}
     }
   };
 
+  DATA.rrii.txt = {"name": "Relaciones Internacionales", "code": "RRII", "heroH": "La plataforma definitiva para internacionalistas y profesionales de alto impacto", "heroP": "Dónde estudiar la carrera, cómo financiar un posgrado y qué organismos, ONG y empresas contratan. Cada resultado lleva a la fuente oficial.", "workH": "Organismos, ONG y empresas que contratan internacionalistas", "workP": "Dónde trabajar, qué puestos existen y cuál es el primer paso para entrar.", "talH": "Talentos: conocé a quienes estudian y trabajan en RRII", "talP": "Perfiles de estudiantes y licenciados. Mirá qué hicieron, dónde trabajaron y escribiles por LinkedIn.", "talSecH": "Quiénes estudian y trabajan en Relaciones Internacionales", "talSub": "Perfiles de estudiantes y licenciados de la carrera. Mirá qué hicieron, dónde trabajaron y escribiles por LinkedIn.", "routesH": "Seis caminos después de la licenciatura", "studySub": "Los ejes que se repiten en la mayoría de los planes de Relaciones Internacionales. Cada universidad ordena y nombra las materias a su manera, así que mirá el plan de estudios en su sitio.", "areas": ["Política exterior", "Cooperación internacional", "Comercio exterior", "Derechos humanos", "Seguridad internacional", "Organismos internacionales", "Investigación", "Diplomacia"], "headlineEx": "«Estudiante de RRII · Universidad de Belgrano» o «Licenciada en RRII · Analista de comercio exterior»"};
+  var SHARED_T = ["Beca económica para estudiantes universitarios 2026", "Beca Chevening", "Becas Fulbright para posgrado", "Becas de posgrado DAAD", "Erasmus Mundus, maestrías conjuntas", "Becas de posgrado Fundación Carolina", "Excellence Eiffel Scholarship", "Becas académicas de la OEA", "Becas doctorales y posdoctorales", "Program on Negotiation", "Cursos de idiomas del Centro Universitario de Idiomas (CUI)", "Cursos de alemán", "Cursos de francés", "Exámenes IELTS", "Examen de inglés IELTS", "Certificaciones de francés DELF y DALF", "Portal de empleos y pasantías de la ONU", "Young Professionals Programme (YPP)", "Pasantías en la OEA", "ACNUR en Argentina", "Comité Internacional de la Cruz Roja", "Amnistía Internacional", "Idealist", "ReliefWeb, empleos humanitarios", "Voluntariado en Cruz Roja Argentina", "Voluntariado en TECHO Argentina", "Voluntarios y Voluntarias de las Naciones Unidas (UNV)"];
+  DATA.derecho = {
+    txt: {"name": "Derecho", "code": "DER", "heroH": "La plataforma definitiva para estudiantes y profesionales del Derecho", "heroP": "Dónde estudiar abogacía, cómo financiar un posgrado y qué estudios, tribunales, ONG y organismos contratan. Cada resultado lleva a la fuente oficial.", "workH": "Estudios, tribunales, ONG y organismos que contratan abogados y abogadas", "workP": "Dónde trabajar, qué puestos existen y cuál es el primer paso para entrar.", "talH": "Talentos: conocé a quienes estudian y trabajan en Derecho", "talP": "Perfiles de estudiantes y abogados. Mirá qué hicieron, dónde trabajaron y escribiles por LinkedIn.", "talSecH": "Quiénes estudian y trabajan en Derecho", "talSub": "Perfiles de estudiantes y abogados y abogadas. Mirá qué hicieron, dónde trabajaron y escribiles por LinkedIn.", "routesH": "Seis caminos después de la abogacía", "studySub": "Los ejes que se repiten en la mayoría de los planes de Abogacía. Cada universidad ordena y nombra las materias a su manera, así que mirá el plan de estudios en su sitio.", "areas": ["Derecho penal", "Derecho civil", "Derecho comercial y societario", "Derecho laboral", "Derecho constitucional", "Derechos humanos", "Derecho ambiental", "Derecho internacional"], "headlineEx": "«Estudiante de Abogacía · Universidad de Belgrano» o «Abogada · Estudio jurídico»"},
+    items: DATA.rrii.items.filter(function(r){ return SHARED_T.indexOf(r[2]) > -1; }).concat([["estudiar", "Abogacía", "Abogacía", "Universidad de Buenos Aires, Facultad de Derecho", "Buenos Aires", "AR", "ing,est", "Carrera de grado de la Facultad de Derecho de la UBA. La facultad también ofrece Traductor Público, Calígrafo Público y Profesorado. El plan de estudios y el ingreso figuran en su sitio.", "https://www.derecho.uba.ar/academica/index.php"], ["estudiar", "Posgrado", "Posgrados de Derecho de la UBA", "Universidad de Buenos Aires, Facultad de Derecho", "Buenos Aires", "AR", "grad,exp", "Doctorado, maestrías (por ejemplo en Derecho y Economía, en Magistratura o en Derecho Comercial y de los Negocios), carreras de especialización y cursos. Cada propuesta tiene su propia inscripción.", "https://www.derecho.uba.ar/academica/index.php"], ["estudiar", "Abogacía", "Abogacía", "Universidad Nacional de La Plata, Facultad de Ciencias Jurídicas y Sociales", "La Plata, Buenos Aires", "AR", "ing,est", "Carrera de Abogacía de la UNLP. Los requisitos de ingreso, el plan y las fechas de inscripción figuran en el sitio de la facultad.", "https://www.jursoc.unlp.edu.ar"], ["estudiar", "Abogacía", "Abogacía", "Universidad Nacional de Córdoba, Facultad de Derecho", "Córdoba", "AR", "ing,est", "Carrera de Abogacía de la UNC. Mirá el plan de estudios, el ingreso y los posgrados en el sitio de la facultad.", "https://derecho.unc.edu.ar"], ["estudiar", "Abogacía", "Abogacía", "Universidad Nacional de Rosario, Facultad de Derecho", "Rosario, Santa Fe", "AR", "ing,est", "Carrera de Abogacía de la UNR. El plan, el ingreso y los posgrados figuran en el sitio de la facultad.", "https://fder.unr.edu.ar"], ["estudiar", "Abogacía", "Abogacía", "Universidad Nacional del Litoral, Facultad de Ciencias Jurídicas y Sociales", "Santa Fe", "AR", "ing,est", "Carrera de Abogacía de la UNL. Consultá el plan de estudios y la inscripción en el sitio de la facultad.", "https://www.fcjs.unl.edu.ar"], ["estudiar", "Abogacía", "Abogacía", "Pontificia Universidad Católica Argentina (UCA)", "Buenos Aires", "AR", "ing,est", "Carrera de Abogacía de la Facultad de Derecho de la UCA. El plan y la inscripción figuran en el sitio de la universidad.", "https://uca.edu.ar"], ["estudiar", "Abogacía", "Abogacía", "Universidad Austral, Facultad de Derecho", "Buenos Aires", "AR", "ing,est", "Carrera de Abogacía de la Universidad Austral. Mirá el plan, los requisitos y los posgrados en su sitio.", "https://www.austral.edu.ar/derecho/"], ["estudiar", "Abogacía", "Abogacía", "Universidad de Palermo, Facultad de Derecho", "Buenos Aires", "AR", "ing,est", "Carrera de Abogacía de la Universidad de Palermo. El plan y la inscripción figuran en el sitio de la facultad.", "https://www.palermo.edu/derecho/"], ["estudiar", "Abogacía", "Abogacía", "Universidad Torcuato Di Tella, Escuela de Derecho", "Buenos Aires", "AR", "ing,est", "Carrera de Abogacía de la Universidad Torcuato Di Tella. Los requisitos y el plan figuran en el sitio de la universidad.", "https://www.utdt.edu"], ["estudiar", "Abogacía", "Abogacía", "Universidad de San Andrés, Escuela de Derecho", "Victoria, Buenos Aires", "AR", "ing,est", "Carrera de Abogacía de la Universidad de San Andrés. Consultá el plan y la inscripción en su sitio.", "https://udesa.edu.ar"], ["estudiar", "Abogacía", "Abogacía", "Universidad de Belgrano", "Buenos Aires", "AR", "ing,est", "Carrera de Abogacía de la Universidad de Belgrano. El plan y la inscripción figuran en el sitio de la universidad.", "https://www.ub.edu.ar"], ["estudiar", "Posgrado", "LL.M. en Columbia Law School", "Columbia Law School", "Nueva York, EE.UU.", "EX", "grad,exp", "Maestría en Derecho (LL.M.) para abogados con título de grado. Los requisitos y los plazos figuran en su sitio.", "https://www.law.columbia.edu"], ["estudiar", "Posgrado", "LL.M. en Harvard Law School", "Harvard Law School", "Cambridge, EE.UU.", "EX", "grad,exp", "Maestría en Derecho (LL.M.) para abogados con título de grado. Los requisitos y los plazos figuran en su sitio.", "https://hls.harvard.edu"], ["estudiar", "Posgrado", "LL.M. en derecho internacional humanitario y derechos humanos", "Geneva Academy", "Ginebra, Suiza", "EX", "grad,exp", "Programa de posgrado de la Academia de Ginebra sobre derecho humanitario y derechos humanos. Mirá requisitos y plazos en su sitio.", "https://www.geneva-academy.ch"], ["cursos", "Capacitación", "Cursos del Colegio Público de la Abogacía", "Colegio Público de la Abogacía de la Capital Federal (CPACF)", "Ciudad de Buenos Aires", "AR", "grad,exp", "Capacitación y actividades para abogados y abogadas. Para ejercer en la Ciudad de Buenos Aires hace falta matricularse en el colegio.", "https://www.cpacf.org.ar"], ["cursos", "Capacitación", "Escuela Judicial del Consejo de la Magistratura", "Poder Judicial de la Nación", "Buenos Aires", "AR", "grad,exp", "Forma y perfecciona a quienes integran o quieren ingresar al Poder Judicial de la Nación, incluidos los aspirantes a la magistratura. Los cursos y requisitos figuran en el sitio del Consejo.", "https://www.consejomagistratura.gov.ar"], ["cursos", "Capacitación", "Ciclo de Cursos Online (CCO)", "Universidad de Buenos Aires, Facultad de Derecho", "Online", "ON", "est,grad,exp", "Ciclo de cursos online de la Secretaría Académica de la Facultad de Derecho de la UBA.", "https://www.derecho.uba.ar/academica/index.php"], ["cursos", "Capacitación", "Cursos de derechos humanos", "Instituto Interamericano de Derechos Humanos (IIDH)", "Online y Costa Rica", "ON", "est,grad,exp", "Institución del sistema interamericano que ofrece formación en derechos humanos para la región. Consultá en su sitio la oferta vigente.", "https://www.iidh.ed.cr"], ["organismos", "Pasantía", "Programa de Pasantías y Visitas Profesionales", "Corte Interamericana de Derechos Humanos", "San José, Costa Rica", "EX", "est,grad,exp", "Para estudiantes de derecho y egresados con menos de dos años de experiencia (pasantía) o con al menos dos años (visita profesional). Las convocatorias abren por períodos: la última cerró el 11 de septiembre de 2026 y cubría enero a agosto de 2027. Mirá la próxima en su sitio.", "https://www.corteidh.or.cr"], ["organismos", "Pasantía", "Pasantías en la CIDH", "Comisión Interamericana de Derechos Humanos (OEA)", "Washington, EE.UU.", "EX", "est,grad", "Órgano de la OEA que protege los derechos humanos en la región. Consultá en su sitio si hay un programa de pasantías abierto y sus requisitos.", "https://www.oas.org/es/cidh/"], ["organismos", "Pasantía", "Programa de pasantías del ACNUDH", "Oficina de Derechos Humanos de las Naciones Unidas", "Ginebra, Suiza", "EX", "est,grad", "Programa de pasantías de la oficina de derechos humanos de la ONU. Los requisitos y la postulación figuran en su sitio.", "https://www.ohchr.org/es"], ["organismos", "Pasantía", "Pasantías y profesionales visitantes en la Corte Penal Internacional", "Corte Penal Internacional", "La Haya, Países Bajos", "EX", "est,grad,exp", "La Corte ofrece pasantías y programas para profesionales visitantes en sus áreas jurídicas. Mirá las vacantes y los requisitos en su sitio.", "https://www.icc-cpi.int"], ["ong", "ONG", "Centro de Estudios Legales y Sociales (CELS)", "CELS", "Buenos Aires", "AR", "est,grad,exp", "Organización argentina de derechos humanos que litiga casos de interés público y hace investigación. Sus áreas de trabajo y los datos de contacto figuran en su sitio.", "https://www.cels.org.ar"], ["ong", "ONG", "Asociación Civil por la Igualdad y la Justicia (ACIJ)", "ACIJ", "Buenos Aires", "AR", "est,grad,exp", "Organización que trabaja en acceso a la justicia y litigio estratégico. Consultá en su sitio si tiene convocatorias abiertas.", "https://acij.org.ar"], ["ong", "ONG", "Asociación por los Derechos Civiles (ADC)", "ADC", "Buenos Aires", "AR", "est,grad,exp", "Organización que trabaja en derechos civiles y libertad de expresión. Consultá en su sitio sus proyectos y convocatorias.", "https://adc.org.ar"], ["ong", "ONG", "Poder Ciudadano", "Poder Ciudadano", "Buenos Aires", "AR", "est,grad,exp", "Organización que trabaja en transparencia, acceso a la información y calidad institucional. Mirá en su sitio cómo sumarte.", "https://poderciudadano.org"], ["ong", "ONG", "Human Rights Watch", "Human Rights Watch", "Internacional", "EX", "grad,exp", "Organización internacional de derechos humanos con investigadores y abogados. Publica sus búsquedas en su sitio.", "https://www.hrw.org/es"], ["estado", "Concursos", "Concursos para magistrados", "Consejo de la Magistratura del Poder Judicial de la Nación", "Buenos Aires", "AR", "grad,exp", "Llama a concursos públicos de oposición y antecedentes para cubrir cargos de jueces. El reglamento y cada llamado se publican en su sitio y en el del Poder Judicial.", "https://www.consejomagistratura.gov.ar"], ["estado", "Poder Judicial", "Poder Judicial de la Nación", "Poder Judicial de la Nación", "Todo el país", "AR", "est,grad,exp", "Sitio del Poder Judicial, con información de concursos, de la Escuela Judicial y de servicios. Ahí están las vías para ingresar.", "https://www.pjn.gov.ar"], ["estado", "Ministerio Público", "Ministerio Público Fiscal de la Nación", "Ministerio Público Fiscal", "Todo el país", "AR", "grad,exp", "Dirige la investigación y sostiene la acusación en los procesos penales federales. Mirá en su sitio si hay convocatorias o programas de formación.", "https://www.mpf.gob.ar"], ["estado", "Ministerio Público", "Ministerio Público de la Defensa", "Defensoría General de la Nación", "Todo el país", "AR", "grad,exp", "Brinda defensa pública oficial. Convoca a concursos para defensores públicos oficiales, que figuran en su sitio.", "https://www.mpd.gov.ar"], ["estado", "Ministerio", "Ministerio de Justicia de la Nación", "Ministerio de Justicia", "Buenos Aires", "AR", "grad,exp", "Organismo del Poder Ejecutivo con áreas de asuntos legales, registros y políticas de justicia. Consultá en su sitio si hay convocatorias abiertas.", "https://www.argentina.gob.ar/justicia"], ["estado", "Defensoría", "Defensoría del Pueblo de la Nación", "Defensoría del Pueblo", "Buenos Aires", "AR", "grad,exp", "Institución que defiende derechos frente a la administración pública. Consultá en su sitio si hay convocatorias.", "https://www.dpn.gob.ar"], ["empresas", "Estudio jurídico", "Marval O'Farrell Mairal", "Marval O'Farrell Mairal", "Buenos Aires", "AR", "est,grad,exp", "Estudio jurídico de Buenos Aires. Mirá en su sitio si tiene búsquedas o programas para estudiantes y recién graduados.", "https://www.marval.com"], ["empresas", "Estudio jurídico", "Bruchou & Funes de Rioja", "Bruchou & Funes de Rioja", "Buenos Aires", "AR", "est,grad,exp", "Estudio jurídico de Buenos Aires. Mirá en su sitio si tiene búsquedas o programas para estudiantes y recién graduados.", "https://www.bruchoufunes.com"], ["empresas", "Estudio jurídico", "Pérez Alati, Grondona, Benites & Arntsen", "Pérez Alati, Grondona, Benites & Arntsen", "Buenos Aires", "AR", "est,grad,exp", "Estudio jurídico de Buenos Aires. Mirá en su sitio si tiene búsquedas o programas para estudiantes y recién graduados.", "https://www.pagbam.com"], ["empresas", "Estudio jurídico", "Beccar Varela", "Beccar Varela", "Buenos Aires", "AR", "est,grad,exp", "Estudio jurídico de Buenos Aires. Mirá en su sitio si tiene búsquedas o programas para estudiantes y recién graduados.", "https://www.beccarvarela.com"], ["empresas", "Estudio jurídico", "Allende & Brea", "Allende & Brea", "Buenos Aires", "AR", "est,grad,exp", "Estudio jurídico de Buenos Aires. Mirá en su sitio si tiene búsquedas o programas para estudiantes y recién graduados.", "https://www.allendebrea.com.ar"], ["think", "Think tank", "Centro de Estudios de Justicia de las Américas (CEJA)", "CEJA", "Santiago, Chile", "EX", "est,grad,exp", "Organismo de la OEA dedicado a la reforma y el estudio de los sistemas de justicia de la región. Publica estudios, cursos y vacantes en su sitio.", "https://cejamericas.org"], ["think", "Think tank", "CIPPEC", "CIPPEC", "Buenos Aires", "AR", "grad,exp", "Centro de políticas públicas con áreas de instituciones, justicia y desarrollo. Mirá en su sitio cómo sumarte.", "https://www.cippec.org"], ["eventos", "Congreso", "Congreso Iberoamericano de Derecho e Informática 2026", "Facultad de Ciencias Jurídicas y Sociales, Universidad Nacional del Litoral", "Santa Fe", "AR", "est,grad,exp", "Se realiza del 4 al 6 de noviembre de 2026, junto con el XXVIII Congreso FIADI y el XVI Congreso Red CIIDDI. Reúne a especialistas en derecho digital e inteligencia artificial. Las condiciones de inscripción figuran en el sitio de la facultad.", "https://www.unl.edu.ar/noticias/news/view/se_realizar%C3%A1_el_congreso_iberoamericano_de_derecho_e_inform%C3%A1tica_2026", "2026-11-06"]]),
+    talents: [],
+    talentExamples: [{"n": "Julieta Ejemplo", "h": "Abogada · Estudio jurídico", "l": "Buenos Aires, Argentina", "s": "Perfil de ejemplo. Cada persona cuenta en dos o tres líneas qué estudió, qué hace hoy y qué busca.", "x": ["Dónde trabajó o hizo una pasantía", "Un caso o proyecto destacado"], "a": ["Derecho comercial y societario", "Derecho civil"], "i": ["Español", "Inglés"]}, {"n": "Tomás Modelo", "h": "Estudiante de Abogacía · Pasante en el Poder Judicial", "l": "Rosario, Argentina", "s": "Perfil de ejemplo. Acá va un resumen corto con intereses, formación y qué tipo de oportunidades busca.", "x": ["Pasantía en un juzgado o fiscalía", "Voluntariado o clínica jurídica"], "a": ["Derecho penal", "Derechos humanos"], "i": ["Español", "Inglés", "Portugués"]}, {"n": "Sofía Muestra", "h": "Abogada · Investigadora y docente", "l": "Córdoba, Argentina", "s": "Perfil de ejemplo. Se muestra cómo luce una ficha con experiencia, áreas de interés e idiomas.", "x": ["Docencia en la facultad", "Publicaciones o ponencias"], "a": ["Derecho constitucional", "Derecho ambiental"], "i": ["Español", "Inglés"]}],
+    routes: [["Poder Judicial y Ministerio Público", "Secretario o empleado judicial, funcionario del Ministerio Público Fiscal o de la Defensa, aspirante a la magistratura.", "Mirá cómo se ingresa y qué concursos y cursos de la Escuela Judicial hay abiertos.", "estado"], ["Estudios jurídicos y empresas", "Abogado asociado, abogado de empresa, especialista en societario, contratos o cumplimiento.", "Buscá pasantías en estudios y armá un perfil con tus áreas de interés.", "empresas"], ["ONG y derechos humanos", "Litigio de interés público, incidencia, investigación y asistencia legal a personas y comunidades.", "Hacé un voluntariado o una pasantía en una ONG de tu área y seguí sus convocatorias.", "ong"], ["Organismos internacionales y tribunales", "Pasante o asistente legal en el sistema interamericano, la ONU o la Corte Penal Internacional.", "Sumá derecho internacional público e idiomas, y postulá a las pasantías por período.", "organismos"], ["Posgrado, investigación y docencia", "Docente universitario, investigador, becario de posgrado.", "Elegí una especialización o maestría y explorá becas antes de decidir.", "becas"], ["Ejercicio independiente y formación continua", "Abogado matriculado, mediador, consultor.", "Matriculate en el colegio de tu jurisdicción y sumá cursos de práctica profesional.", "cursos"]],
+    axes: [["Derecho privado", ["Derecho civil: parte general", "Obligaciones", "Contratos", "Derechos reales", "Familia y sucesiones"]], ["Derecho público", ["Derecho constitucional", "Derecho administrativo", "Derecho tributario", "Recursos naturales y protección del ambiente"]], ["Derecho penal y procesal", ["Derecho penal: parte general", "Derecho penal: parte especial", "Derecho procesal civil y comercial", "Derecho procesal penal"]], ["Derecho empresarial y social", ["Derecho comercial y sociedades", "Concursos y quiebras", "Derecho del trabajo y de la seguridad social"]], ["Derecho internacional y derechos humanos", ["Derecho internacional público", "Derecho internacional privado", "Derechos humanos y garantías", "Derecho de la integración"]], ["Herramientas", ["Introducción al derecho", "Filosofía del derecho", "Redacción jurídica y argumentación", "Práctica profesional y clínicas jurídicas", "Inglés jurídico"]]]
+  };
+
   // Datos por país. Hoy solo Argentina. Cada país tiene sus carreras con la misma forma que DATA.rrii.
   var DATA_BY_COUNTRY = {ar: DATA};
   var career = DATA.rrii;
+  var CUR_CAREER = "rrii", CAREER_KEY = "pensaglobal-carrera";
+  var CAREERS = [
+    {id: "rrii", name: "Relaciones Internacionales", ready: true},
+    {id: "derecho", name: "Derecho", ready: true},
+    {id: "ingenierias", name: "Ingenierías", ready: false},
+    {id: "rrhh", name: "Recursos Humanos", ready: false},
+    {id: "economia", name: "Economía", ready: false},
+    {id: "administracion", name: "Administración de Empresas", ready: false},
+    {id: "politicas", name: "Ciencias Políticas", ready: false},
+    {id: "comunicacion", name: "Comunicación", ready: false}
+  ];
+  function TXT(){ return career.txt; }
+  function careerMatch(raw){
+    raw = String(raw || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, "");
+    if (!raw) return CUR_CAREER === "rrii";
+    if (raw === "todas" || raw === "todos") return true;
+    var c = CAREERS.filter(function(x){ return x.id === CUR_CAREER; })[0];
+    return raw === c.id || raw === c.name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, "") || (c.id === "rrii" && raw === "rrii");
+  }
   var ITEMS = [];
   function useData(code){
-    career = DATA_BY_COUNTRY[code].rrii;
+    career = DATA_BY_COUNTRY[code][CUR_CAREER] || DATA_BY_COUNTRY[code].rrii;
     ITEMS = [];
     career.items.forEach(function(r){
       var v = r[9] ? parseVence(r[9]) : null;
@@ -1055,13 +1096,14 @@ a.btn{text-decoration:none;display:inline-block}
     var rows = parseCSV(text); if (rows.length < 2) return [];
     var head = rows[0].map(function(h){return norm(h).trim();});
     function ix(k){ for (var i = 0; i < head.length; i++) { if (head[i] === k) return i; } for (var j = 0; j < head.length; j++) { if (head[j].indexOf(k) > -1) return j; } return -1; }
-    var c = {c:ix("categoria"), k:ix("tipo"), t:ix("titulo"), o:ix("organizacion"), p:ix("lugar"), w:ix("alcance"), l:ix("etapa"), d:ix("descripcion"), u:ix("link"), i:ix("imagen"), v:ix("vence"), ok:ix("aprobado"), pais:ix("pais")};
+    var c = {c:ix("categoria"), k:ix("tipo"), t:ix("titulo"), o:ix("organizacion"), p:ix("lugar"), w:ix("alcance"), l:ix("etapa"), d:ix("descripcion"), u:ix("link"), i:ix("imagen"), v:ix("vence"), ok:ix("aprobado"), pais:ix("pais"), car:ix("carrera")};
     if (c.c < 0 || c.t < 0 || c.u < 0) return [];
     var out = [], now = new Date();
     function g(row, i){ return i < 0 ? "" : String(row[i] || "").trim(); }
     for (var r = 1; r < rows.length; r++) {
       var row = rows[r];
       if (c.ok > -1 && !/^(si|sí|aprobado|ok|x|1)$/.test(norm(g(row, c.ok)).trim())) continue;
+      if (c.car < 0 ? CUR_CAREER !== "rrii" : !careerMatch(g(row, c.car))) continue;
       var pais = norm(g(row, c.pais)).trim();
       if (pais && pais !== code && pais !== norm(COUNTRIES[code].name) && pais !== "todos") continue;
       var cat = norm(g(row, c.c)).replace(/\s+/g, "");
@@ -1084,8 +1126,9 @@ a.btn{text-decoration:none;display:inline-block}
   function loadSheetItems(code){
     var url = safeUrl(ITEMS_CSV_URL); if (!url) return;
     if (!sheetP) sheetP = fetch(url).then(function(r){ if (!r.ok) throw new Error("http"); return r.text(); });
+    var cid = CUR_CAREER;
     sheetP.then(function(t){
-      if (COUNTRY_CODE !== code) return;
+      if (COUNTRY_CODE !== code || CUR_CAREER !== cid) return;
       var extra = itemsFromCSV(t, code); if (!extra.length) return;
       var keys = {}; extra.forEach(function(it){ keys[it.t + "|" + it.o] = 1; });
       ITEMS = ITEMS.filter(function(it){ return !keys[it.t + "|" + it.o]; }).concat(extra);
@@ -1127,8 +1170,8 @@ a.btn{text-decoration:none;display:inline-block}
     var counts = {}; ITEMS.forEach(function(it){counts[it.c] = (counts[it.c]||0) + 1;});
     var parts = ["N" + String(ITEMS.length).padStart(4,"0")];
     Object.keys(CAT).forEach(function(k){ parts.push(CAT[k][1] + String(counts[k]||0).padStart(2,"0")); });
-    $("#mrz1").textContent = pad("P<" + COUNTRY.iso + "<PENSAGLOBAL<<RRII", 44);
-    $("#mrz2").textContent = pad("RRII<<" + parts.join("<"), 44);
+    $("#mrz1").textContent = pad("P<" + COUNTRY.iso + "<PENSAGLOBAL<<" + TXT().code, 44);
+    $("#mrz2").textContent = pad(TXT().code + "<<" + parts.join("<"), 44);
   }
 
   var openRows = new Set();
@@ -1238,6 +1281,39 @@ a.btn{text-decoration:none;display:inline-block}
   ];
   var slideI = 0, heroReady = false;
   function arrowSvg(dir){ return '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="' + (dir < 0 ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7") + '" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'; }
+  function applyCareerText(){
+    var t = TXT();
+    SLIDES[0].h = t.heroH; SLIDES[0].p = t.heroP;
+    SLIDES[2].h = t.workH; SLIDES[2].p = t.workP;
+    SLIDES[3].h = t.talH; SLIDES[3].p = t.talP;
+    if (heroReady) showSlide(slideI, false);
+    $("#tal-h").textContent = t.talSecH; $("#talSub").textContent = t.talSub;
+    $("#rutas-h").textContent = t.routesH; $("#studySub").textContent = t.studySub;
+    $("#careerName").textContent = t.name;
+    document.title = "Pensá Global · " + t.name;
+    var cs = $("#career"); cs.innerHTML = CAREERS.map(function(c){ return '<option value="' + c.id + '"' + (c.ready ? "" : " disabled") + '>' + esc(c.name) + (c.ready ? "" : " (próximamente)") + '</option>'; }).join(""); cs.value = CUR_CAREER;
+    renderCareerMenu();
+  }
+  function renderCareerMenu(){
+    $("#careerPop").innerHTML = CAREERS.map(function(c){
+      var here = c.id === CUR_CAREER;
+      return '<button type="button" role="menuitem" data-career="' + c.id + '"' + (here ? ' aria-current="true"' : '') + (c.ready ? '' : ' aria-disabled="true"') + '><span>' + esc(c.name) + '</span>' + (here ? '<span class="cp-here">Estás acá</span>' : (c.ready ? '' : '<span class="cp-soon">Pronto</span>')) + '</button>';
+    }).join("");
+  }
+  function setCareer(id){
+    var c = CAREERS.filter(function(x){ return x.id === id; })[0];
+    if (!c || !c.ready) { if (c) toast(c.name + " llega pronto a Pensá Global."); return; }
+    if (id === CUR_CAREER) return;
+    CUR_CAREER = id; try { localStorage.setItem(CAREER_KEY, id); } catch(e) {}
+    useData(COUNTRY_CODE);
+    state = {cat:"all", sub:"all", q:"", stage:"all", where:"all", onlySaved:false};
+    $("#q").value = ""; $("#stage").value = "all"; $("#where").value = "all";
+    T.q = ""; $("#talQ").value = "";
+    applyCareerText(); drawStatic(); drawMrz(); render(); drawHome(); applyTalents(); loadSheetItems(COUNTRY_CODE);
+    var tb = $("#talBot"); if (tb) tb.hidden = true;
+    var tj = $("#talJoin"); if (tj) tj.setAttribute("aria-expanded", "false");
+    window.scrollTo(0, 0);
+  }
   function goExplore(cat, sub){
     state = {cat:cat, sub:sub || "all", q:"", stage:"all", where:"all", onlySaved:false};
     $("#q").value = ""; $("#stage").value = "all"; $("#where").value = "all";
@@ -1547,7 +1623,7 @@ a.btn{text-decoration:none;display:inline-block}
     var rows = parseCSV(text); if (rows.length < 2) return [];
     var head = rows[0].map(function(h){return norm(h);});
     function ix(k){ for (var i = 0; i < head.length; i++) { if (head[i].indexOf(k) > -1) return i; } return -1; }
-    var c = {n:ix("nombre"), f:ix("foto"), h:(ix("titular")>-1?ix("titular"):ix("titulo")), l:ix("ubicacion"), s:ix("resumen"), x:ix("experiencia"), a:ix("areas"), i:ix("idiomas"), li:ix("linkedin"), ok:ix("aprobado")};
+    var c = {n:ix("nombre"), f:ix("foto"), h:(ix("titular")>-1?ix("titular"):ix("titulo")), l:ix("ubicacion"), s:ix("resumen"), x:ix("experiencia"), a:ix("areas"), i:ix("idiomas"), li:ix("linkedin"), ok:ix("aprobado"), car:ix("carrera")};
     if (c.ok < 0 || c.n < 0) return [];
     var out = [];
     for (var r = 1; r < rows.length; r++) {
@@ -1555,7 +1631,7 @@ a.btn{text-decoration:none;display:inline-block}
       var g = function(k){ return c[k] < 0 ? "" : (row[c[k]] || ""); };
       if (["si","x","ok","aprobado","true","1"].indexOf(norm(g("ok")).trim()) < 0) continue;
       var t = toTalent({n:g("n"), h:g("h"), l:g("l"), s:g("s"), x:splitList(g("x"), /[;\n]/), a:splitList(g("a")), i:splitList(g("i")), li:g("li"), f:g("f")});
-      if (t.n) out.push(t);
+      t.car = g("car"); if (t.n) out.push(t);
     }
     return out;
   }
@@ -1610,19 +1686,22 @@ a.btn{text-decoration:none;display:inline-block}
     $("#join").innerHTML = '<p class="lab">¿Estudiás o ejercés la carrera?</p>' +
       (form ? '<a class="btn" href="' + esc(form) + '" target="_blank" rel="noopener noreferrer">Sumarme como talento</a>' : (inboxOk() ? '<button class="btn" type="button" id="talJoin" aria-expanded="false" aria-controls="talBot">Sumarme como talento</button>' : '<button class="btn" type="button" disabled>Sumarme, muy pronto</button>')) +
       '<small>Tu perfil se publica después de una revisión y solo con tu permiso. Mostramos tu enlace de LinkedIn, no tu mail ni tu teléfono. Podés pedir que lo borremos cuando quieras.</small>';
-    var manual = (career.talents || []).map(toTalent);
-    function start(sheet){
-      var list = manual.concat(sheet), ex = false;
-      if (!list.length) { list = career.talentExamples.map(function(o){ var t = toTalent(o); t.ex = true; return t; }); ex = true; }
-      T.list = list;
-      $("#talNote").innerHTML = ex ? '<p class="tal-note">Estos perfiles son ejemplos con nombres ficticios. Desaparecen cuando se publica el primero real.</p>' : "";
-      fillSelects(); renderT();
-    }
     var url = safeUrl(SHEET_CSV_URL);
     if (url) {
       fetch(url).then(function(r){ if (!r.ok) throw new Error("http"); return r.text(); })
-        .then(function(t){ start(fromCSV(t)); }).catch(function(){ start([]); });
-    } else { start([]); }
+        .then(function(t){ talSheet = fromCSV(t); applyTalents(); }).catch(function(){ talSheet = []; applyTalents(); });
+    } else { talSheet = []; applyTalents(); }
+  }
+  var talSheet = null;
+  function applyTalents(){
+    if (talSheet === null) return;
+    var manual = (career.talents || []).map(toTalent);
+    var sheet = talSheet.filter(function(t){ return careerMatch(t.car); });
+    var list = manual.concat(sheet), ex = false;
+    if (!list.length) { list = career.talentExamples.map(function(o){ var t = toTalent(o); t.ex = true; return t; }); ex = true; }
+    T.list = list; T.area = "all"; T.lang = "all";
+    $("#talNote").innerHTML = ex ? '<p class="tal-note">Estos perfiles son ejemplos con nombres ficticios. Desaparecen cuando se publica el primero real.</p>' : "";
+    fillSelects(); renderT();
   }
   $("#talQ").addEventListener("input", function(){ T.q = this.value; renderT(); });
   $("#talArea").addEventListener("change", function(){ T.area = this.value; renderT(); });
@@ -1713,7 +1792,7 @@ a.btn{text-decoration:none;display:inline-block}
     function proposalText(){
       var wl = D.p ? D.p + " (" + WHERE[D.w] + ")" : WHERE[D.w];
       var row = [CAT[D.cat][0], CAT[D.cat][0], D.t, D.o, D.p || "", D.w, "ing,est,grad,exp", D.d || "", D.u, D.v || "", "", "ar", D.i || ""].join("\t");
-      return "Nueva oportunidad para Pensá Global\n\nTipo: " + CAT[D.cat][0] + "\nTítulo: " + D.t + "\nOrganización: " + D.o + "\nDónde: " + wl + "\nEnlace: " + D.u + "\nFecha: " + (D.v ? fmtDate(D.v) : "sin fecha") + "\nDescripción: " + (D.d || "-") + "\nImagen: " + (D.i || "no") + "\n\nFila para la planilla (categoría, tipo, título, organización, lugar, alcance, etapa, descripción, link, vence, aprobado, país, imagen):\n" + row;
+      return "Nueva oportunidad para Pensá Global\n\nCarrera: " + TXT().name + "\nTipo: " + CAT[D.cat][0] + "\nTítulo: " + D.t + "\nOrganización: " + D.o + "\nDónde: " + wl + "\nEnlace: " + D.u + "\nFecha: " + (D.v ? fmtDate(D.v) : "sin fecha") + "\nDescripción: " + (D.d || "-") + "\nImagen: " + (D.i || "no") + "\n\nFila para la planilla (categoría, tipo, título, organización, lugar, alcance, etapa, descripción, link, vence, aprobado, país, imagen):\n" + row;
     }
     function summary(){
       step = "done"; qr.innerHTML = "";
@@ -1736,7 +1815,7 @@ a.btn{text-decoration:none;display:inline-block}
       var ep = safeUrl(OPP_ENDPOINT);
       if (ep) {
         say("bot", "Enviando tu propuesta…");
-        var pl = {categoria: CAT[D.cat][0], tipo: CAT[D.cat][0], titulo: D.t, organizacion: D.o, lugar: D.p || "", alcance: D.w, etapa: "ing,est,grad,exp", descripcion: D.d || "", link: D.u, vence: D.v || "", imagen: D.i || "", permiso: "si"};
+        var pl = {categoria: CAT[D.cat][0], tipo: CAT[D.cat][0], titulo: D.t, organizacion: D.o, lugar: D.p || "", alcance: D.w, etapa: "ing,est,grad,exp", descripcion: D.d || "", link: D.u, vence: D.v || "", imagen: D.i || "", carrera: TXT().name, permiso: "si"};
         fetch(ep, {method: "POST", mode: "no-cors", headers: {"Content-Type": "text/plain;charset=utf-8"}, body: JSON.stringify(pl)})
           .then(function(){ qr.innerHTML = ""; say("bot", "Recibimos tu propuesta. La revisamos y, si está todo bien, aparece en la página. Gracias por sumar."); })
           .catch(function(){ copy(txt, "Propuesta copiada"); say("bot", "No pudimos enviarla ahora, así que copié tu propuesta. Probá de nuevo más tarde."); });
@@ -1820,6 +1899,23 @@ a.btn{text-decoration:none;display:inline-block}
   })();
 
 
+
+  /* Pestaña de carreras */
+  (function(){
+    var m = $("#careerMenu"), pop = $("#careerPop");
+    pop.addEventListener("click", function(e){
+      var b = e.target.closest("[data-career]"); if (!b) return;
+      var id = b.getAttribute("data-career"), c = CAREERS.filter(function(x){ return x.id === id; })[0];
+      if (!c.ready) { toast(c.name + " llega pronto a Pensá Global."); return; }
+      m.open = false; setCareer(id);
+    });
+    m.addEventListener("toggle", function(){ if (m.open) { var o = $("#menu"); if (o) o.open = false; } });
+    document.addEventListener("click", function(e){ if (m.open && !m.contains(e.target)) m.open = false; });
+    document.addEventListener("keydown", function(e){ if (e.key === "Escape" && m.open) { m.open = false; $("#careerMenu summary").focus(); } });
+    $("#menu").addEventListener("toggle", function(){ if ($("#menu").open) m.open = false; });
+    $("#career").addEventListener("change", function(){ setCareer(this.value); });
+  })();
+
   /* Barra de suscripción de arriba: abre y cierra el formulario */
   (function(){
     var b = $("#subToggle"), pn = $("#subPanel");
@@ -1834,7 +1930,7 @@ a.btn{text-decoration:none;display:inline-block}
     var log = $("#tbLog"), qr = $("#tbQr"), form = $("#tbForm"), inp = $("#tbIn"), box = $("#talBot");
     var D = {}, step = "", fin = false, areasSel = [];
     var ORDER = ["n", "h", "l", "s", "x", "a", "i", "li", "f", "ok"];
-    var AREAS = ["Política exterior", "Cooperación internacional", "Comercio exterior", "Derechos humanos", "Seguridad internacional", "Organismos internacionales", "Investigación", "Diplomacia"];
+    var AREAS = TXT().areas;
     function say(who, text){ var m = document.createElement("div"); m.className = "ag-msg " + who; m.textContent = text; log.appendChild(m); log.scrollTop = log.scrollHeight; }
     function chips(list){ qr.innerHTML = ""; list.forEach(function(c){ var b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = c[0]; b.setAttribute("data-v", c[1]); if (c[2]) b.setAttribute("aria-pressed", "true"); qr.appendChild(b); }); }
     function list(t, sep){ return String(t || "").split(sep).map(function(v){ return clip(v, 60); }).filter(Boolean); }
@@ -1856,7 +1952,7 @@ a.btn{text-decoration:none;display:inline-block}
       step = k || "done"; if (!k) return summary();
       var Q = {
         n: ["¿Cómo te llamás? Escribí tu nombre y apellido tal como querés que figure.", []],
-        h: ["¿Cuál es tu titular? Por ejemplo: «Estudiante de RRII · Universidad de Belgrano» o «Licenciada en RRII · Analista de comercio exterior».", []],
+        h: ["¿Cuál es tu titular? Por ejemplo: " + TXT().headlineEx + ".", []],
         l: ["¿Desde dónde? Ciudad y país, por ejemplo: Rosario, Argentina.", []],
         s: ["Contá en dos o tres frases qué estudiás o hacés y qué tipo de oportunidades te interesan.", []],
         x: ["¿Qué experiencia querés destacar? Separá cada una con punto y coma (;). Es opcional.", [["Saltear", "-"]]],
@@ -1891,7 +1987,7 @@ a.btn{text-decoration:none;display:inline-block}
     }
     function textOut(){
       var row = [D.n, D.f || "", D.h, D.l, D.s, (D.x || []).join("; "), (D.a || []).join(", "), (D.i || []).join(", "), D.li || "", ""].join("\t");
-      return "Nuevo talento para Pensá Global\n\nNombre: " + D.n + "\nTitular: " + D.h + "\nUbicación: " + D.l + "\nResumen: " + D.s + "\nExperiencia: " + ((D.x || []).join("; ") || "-") + "\nÁreas: " + (D.a || []).join(", ") + "\nIdiomas: " + (D.i || []).join(", ") + "\nLinkedIn: " + (D.li || "-") + "\nFoto: " + (D.f || "no") + "\nPermiso para publicar: sí\n\nFila para la planilla de talentos (nombre, foto, titular, ubicación, resumen, experiencia, áreas, idiomas, linkedin, aprobado):\n" + row;
+      return "Nuevo talento para Pensá Global\n\nCarrera: " + TXT().name + "\nNombre: " + D.n + "\nTitular: " + D.h + "\nUbicación: " + D.l + "\nResumen: " + D.s + "\nExperiencia: " + ((D.x || []).join("; ") || "-") + "\nÁreas: " + (D.a || []).join(", ") + "\nIdiomas: " + (D.i || []).join(", ") + "\nLinkedIn: " + (D.li || "-") + "\nFoto: " + (D.f || "no") + "\nPermiso para publicar: sí\n\nFila para la planilla de talentos (nombre, foto, titular, ubicación, resumen, experiencia, áreas, idiomas, linkedin, aprobado):\n" + row;
     }
     function summary(){
       step = "done"; fin = true;
@@ -1906,12 +2002,12 @@ a.btn{text-decoration:none;display:inline-block}
       log.appendChild(card); log.scrollTop = log.scrollHeight;
       chips([["Cambiar foto", "photo2"], ["Enviar para revisión", "send"], ["Copiar ficha", "copy"], ["Empezar de nuevo", "reset"]]);
     }
-    function start(){ log.innerHTML = ""; D = {}; areasSel = []; fin = false; say("bot", "Hola, soy el asistente de Talentos. Te hago unas preguntas cortas y armo tu ficha. Nada se publica sin tu permiso y sin una revisión."); ask(); }
+    function start(){ AREAS = TXT().areas; log.innerHTML = ""; D = {}; areasSel = []; fin = false; say("bot", "Hola, soy el asistente de Talentos. Te hago unas preguntas cortas y armo tu ficha. Nada se publica sin tu permiso y sin una revisión."); ask(); }
     form.addEventListener("submit", function(e){ e.preventDefault(); var t = inp.value.trim(); if (!t) return; inp.value = ""; say("me", t); if (fin) { say("bot", "Usá los botones de abajo, o «Empezar de nuevo»."); return; } handle(t); });
     qr.addEventListener("click", function(e){
       var b = e.target.closest("[data-v]"); if (!b) return; var v = b.getAttribute("data-v");
       if (v === "send" && safeUrl(TALENT_ENDPOINT)) {
-        var payload = {n:D.n, h:D.h, l:D.l, s:D.s, x:(D.x||[]).join("; "), a:(D.a||[]).join(", "), i:(D.i||[]).join(", "), li:D.li||"", foto:D.f||"", permiso:"si"};
+        var payload = {n:D.n, h:D.h, l:D.l, s:D.s, x:(D.x||[]).join("; "), a:(D.a||[]).join(", "), i:(D.i||[]).join(", "), li:D.li||"", foto:D.f||"", carrera:TXT().name, permiso:"si"};
         say("bot", "Enviando tu ficha…");
         fetch(safeUrl(TALENT_ENDPOINT), {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(payload)})
           .then(function(){ say("bot", "Recibimos tu ficha. La revisamos y, si todo está bien, aparece en Talentos. Gracias por sumarte."); chips([]); })
@@ -1962,6 +2058,7 @@ a.btn{text-decoration:none;display:inline-block}
     $("#country").value = code;
     if (remember) { try { localStorage.setItem(CKEY, code); } catch(e) {} }
     var first = !booted;
+    applyCareerText();
     if (first) { drawStatic(); initTalents(); initHero(); booted = true; }
     drawMrz(); render(); drawHome();
     loadSheetItems(code);
@@ -1976,6 +2073,7 @@ a.btn{text-decoration:none;display:inline-block}
   }
 
   renderCountries();
+  try { var sc = localStorage.getItem(CAREER_KEY) || ""; var scc = CAREERS.filter(function(x){ return x.id === sc && x.ready; })[0]; if (scc) CUR_CAREER = scc.id; } catch(e) {}
   var savedCountry = "";
   try { savedCountry = localStorage.getItem(CKEY) || ""; } catch(e) {}
   enterCountry(COUNTRIES[savedCountry] && COUNTRIES[savedCountry].ready && DATA_BY_COUNTRY[savedCountry] ? savedCountry : "ar", false);
