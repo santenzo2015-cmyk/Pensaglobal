@@ -475,6 +475,25 @@ a.btn{text-decoration:none;display:inline-block}
 .ag-form{display:flex;gap:.5rem;padding:.7rem;border-top:1px solid var(--rule)}
 .ag-form input{flex:1;min-width:0;border:1px solid var(--rule);border-radius:999px;padding:.65rem 1rem;background:var(--paper);color:var(--ink);font:inherit}
 .ag-form .btn{border-radius:999px;padding:.65rem 1.2rem}
+
+/* suscripción arriba, siempre visible */
+.subbar{position:relative;background:var(--indigo);color:var(--on-indigo)}
+.subbar-btn{display:flex;align-items:center;justify-content:center;gap:.55rem;width:100%;padding:.5rem 1rem;background:none;border:0;color:inherit;font:inherit;font-weight:600;font-size:.9rem;cursor:pointer}
+.subbar-btn:focus-visible{outline:2px solid var(--on-indigo);outline-offset:-4px}
+.subchev{transition:transform 160ms var(--ease-out)}
+.subbar-btn[aria-expanded="true"] .subchev{transform:rotate(180deg)}
+.subpanel{position:absolute;left:0;right:0;top:100%;z-index:9;background:var(--paper);color:var(--ink);border-bottom:2px solid var(--ink);box-shadow:var(--shadow-up);max-height:calc(100vh - 3rem);overflow:auto;padding-block:1.2rem 1.4rem}
+.subpanel[hidden]{display:none}
+.subpanel .h2{font-size:clamp(1.25rem,2.6vw,1.7rem);margin-top:0}
+/* talentos + agregar una oportunidad, al mismo nivel */
+.duo{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:1.6rem 2.4rem;align-items:start;margin-bottom:1.6rem}
+.duo-l{min-width:0}
+.duo-l .tal-bot{max-width:none;margin:0}
+.duo-r{min-width:0;scroll-margin-top:4.5rem}
+.duo-r .h2{font-size:clamp(1.15rem,2vw,1.5rem);margin:0 0 .35rem}
+.duo-r .sub{margin:0 0 .8rem;font-size:.92rem}
+.duo-r .ag-log{height:clamp(240px,38vh,320px)}
+@media (max-width:860px){.duo{grid-template-columns:1fr}}
 /* suscripción por mail */
 .subsc{padding-block:2.6rem;scroll-margin-top:4.5rem;border-top:1px solid var(--rule)}
 .sb-card{max-width:760px;border:1px solid var(--rule);border-radius:18px;background:var(--surface);box-shadow:var(--shadow);padding:1.3rem;display:grid;gap:1rem}
@@ -499,7 +518,7 @@ a.btn{text-decoration:none;display:inline-block}
 .more-btn:hover svg{transform:translateY(2px)}
 .more-btn:active{transform:scale(.97)}
 @media (max-width:820px){.ag-wrap{grid-template-columns:1fr}}
-@media (max-width:720px){.talents,.explorer,.agregar,.subsc{scroll-margin-top:13.5rem}}
+@media (max-width:720px){.talents,.explorer,.duo-r{scroll-margin-top:16rem}}
 /* portada: la foto se muestra a tamaño real (sin agrandar) y se funde con el fondo */
 .gate::after{inset:auto;top:0;right:0;left:auto;bottom:auto;width:min(100%,850px);aspect-ratio:850/476;background:var(--photo,none) center/cover no-repeat;
   -webkit-mask-image:linear-gradient(90deg,transparent 34%,#000 76%),linear-gradient(180deg,#000 55%,transparent 100%);-webkit-mask-composite:source-in;
@@ -526,26 +545,132 @@ a.btn{text-decoration:none;display:inline-block}
 .rmore[hidden]{display:none}
 .rmore .go{margin-top:.6rem}
 .row .org{margin-bottom:0}
+
+/* tarjetas estilo bolsa de empleo */
+.fcard{flex:0 0 clamp(250px,24%,300px);display:flex;flex-direction:column;align-items:flex-start;gap:.55rem;padding:1.2rem;border:0;border-radius:8px;background:var(--surface);box-shadow:0 1px 3px rgba(20,30,50,.12),0 4px 14px rgba(20,30,50,.06);overflow:visible}
+.olg{position:relative;overflow:hidden;flex:none;width:70px;height:70px;border-radius:8px;border:1px solid var(--rule);background:color-mix(in srgb,var(--c1) 14%,var(--surface));color:var(--c1);display:grid;place-items:center}
+.olg svg{width:32px;height:32px}
+.olg .pimg{object-fit:contain;background:#fff;padding:5px;box-sizing:border-box}
+.olg.big{width:84px;height:84px}
+.olg.big svg{width:38px;height:38px}
+.fcard .ft{margin:.35rem 0 0;font:700 1.05rem/1.25 var(--font-display);min-height:3.9rem;-webkit-line-clamp:3}
+.fcard .fo{color:var(--indigo);font-weight:600;font-size:.95rem;min-height:2.6rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ftag{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .65rem;border-radius:6px;background:color-mix(in srgb,var(--c1) 14%,var(--surface));color:var(--ink);font-size:.86rem;font-weight:500;margin:0}
+.ftag i{width:.55rem;height:.55rem;border-radius:50%;background:var(--c1)}
+.floc{display:flex;align-items:flex-start;gap:.5rem;color:var(--ink-2);font-size:.92rem;margin:.1rem 0 0;min-height:2.6rem;text-align:left}
+.floc svg{flex:none;width:20px;height:20px}
+.ffoot{margin-top:auto;display:flex;gap:.7rem;align-items:center;font-size:.86rem;color:var(--ink-2);padding-top:.2rem}
+.ffoot span+span{border-left:1px solid var(--rule);padding-left:.7rem}
+.ffoot .soon{color:var(--stamp);font-weight:600}
+.seeall{text-align:center;margin:1.2rem 0 0}
+.seeall .btn{background:var(--stamp);border-color:var(--stamp);color:#fff;border-radius:999px;padding:.8rem 1.8rem;font-size:1rem}
+.d-main{background:var(--surface);border-radius:8px;box-shadow:0 1px 3px rgba(20,30,50,.12),0 4px 14px rgba(20,30,50,.06)}
+.d-head{display:flex;gap:1.1rem;align-items:flex-start;margin-bottom:1.1rem}
+.d-ttl{min-width:0}
+.d-main h1{font-size:clamp(1.4rem,3.4vw,2rem);margin:0 0 .35rem}
+.d-by{margin:0}
+.d-by b{color:var(--indigo)}
+.d-loc{margin:.9rem 0 0;min-height:0}
+.d-h{font:700 1.1rem var(--font-display);margin:1.6rem 0 .4rem}
+.d-card{border-radius:8px;box-shadow:0 1px 3px rgba(20,30,50,.12),0 4px 14px rgba(20,30,50,.06);border:0}
+.d-facts{padding-top:1.4rem}
+
+/* panel lateral del detalle: más ancho y sin caja */
+.d-body{grid-template-columns:minmax(0,1fr) minmax(340px,470px);gap:1.4rem 3rem}
+.d-card{background:none;border:0;box-shadow:none;border-radius:0;overflow:visible;padding:0;top:5rem}
+.d-facts{padding:0;gap:0}
+.d-facts li{padding:1rem 0;border-bottom:1px solid var(--rule);font-size:1.02rem}
+.d-facts li:first-child{border-top:2px solid var(--ink)}
+.d-facts svg{color:var(--indigo)}
+.d-due{margin:0;padding:1.1rem 0 .4rem;border-top:0}
+.d-cta{margin:.8rem 0 .9rem}
+.d-note{margin:0}
+@media (max-width:899px){.d-body{grid-template-columns:minmax(0,1fr)}.d-card{position:static}}
+
+/* detalle: una sola columna */
+.d-body{display:block;max-width:980px;padding-block:2rem 7rem}
+.dx-head{display:flex;gap:1.4rem;align-items:flex-start;padding-bottom:1.6rem;border-bottom:2px solid var(--ink)}
+.dx-head .olg.big{width:104px;height:104px;border-radius:14px}
+.dx-head .olg.big svg{width:46px;height:46px}
+.dx-ttl{min-width:0}
+.dx-kind{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:0 0 .6rem}
+.dx-soon{font:600 .84rem var(--font-mono);color:var(--stamp)}
+.dx-head h1{font:800 clamp(1.7rem,4.4vw,2.8rem)/1.08 var(--font-display);font-variation-settings:"wdth" 92;margin:0 0 .5rem;overflow-wrap:anywhere;text-wrap:balance}
+.dx-head .d-by{font-size:1.1rem}
+.dx-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0;border-bottom:1px solid var(--rule)}
+.dx-strip>div{padding:1.1rem 1rem 1.1rem 0;min-width:0}
+.dx-strip>div+div{padding-left:1.2rem;border-left:1px solid var(--rule)}
+.dx-strip dt{display:flex;align-items:center;gap:.45rem;font:500 .8rem var(--font-mono);color:var(--ink-2);margin:0 0 .35rem}
+.dx-strip dt svg{width:18px;height:18px;color:var(--indigo)}
+.dx-strip dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+.dx-text{max-width:70ch;padding-top:1.6rem}
+.dx-text h2{font:700 1.25rem var(--font-display);margin:1.6rem 0 .5rem}
+.dx-text h2:first-child{margin-top:0}
+.dx-text p{margin:0 0 .8rem;line-height:1.65}
+.dx-bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--rule);box-shadow:0 -6px 20px rgba(20,30,50,.08);z-index:3}
+.dx-bar-in{max-width:980px;margin-inline:auto;padding:.7rem clamp(16px,4vw,40px);display:flex;align-items:center;gap:.7rem}
+.dx-bar-t{flex:1;min-width:0;margin:0;display:grid}
+.dx-bar-t b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dx-bar-t span{font-size:.85rem;color:var(--ink-2)}
+.dx-bar .d-cta{margin:0;padding:.8rem 1.6rem;white-space:nowrap}
+@media (max-width:719px){
+  .dx-head{flex-direction:column;gap:1rem}
+  .dx-head .olg.big{width:84px;height:84px}
+  .dx-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dx-strip>div:nth-child(3){padding-left:0;border-left:0}
+  .dx-strip>div:nth-child(n+3){border-top:1px solid var(--rule)}
+  .dx-bar-t{display:none}
+  .dx-bar-in{justify-content:flex-end}
+  .dx-bar .d-cta{flex:1;text-align:center}
+}
+
+/* acciones arriba a la derecha, en verde */
+.d-body{padding-block:2rem 3rem}
+.dx-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"logo ttl act";gap:1.4rem;align-items:start}
+.dx-head>.olg{grid-area:logo}
+.dx-ttl{grid-area:ttl}
+.dx-act{grid-area:act;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;justify-content:flex-end}
+.dx-act .circ{background:#E3F4EA;color:#17653A;border:1px solid #9AD3B2}
+.dx-act .circ[aria-pressed="true"]{background:#17653A;color:#fff;border-color:#17653A}
+.dx-act .d-cta{margin:0;padding:.8rem 1.4rem;background:#17653A;color:#fff;white-space:nowrap}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .dx-act .circ{background:#173325;color:#7FE0A8;border-color:#2E6A47}:root:not([data-theme="light"]) .dx-act .d-cta{background:#4CC38A;color:#0B2417}}
+:root[data-theme="dark"] .dx-act .circ{background:#173325;color:#7FE0A8;border-color:#2E6A47}
+:root[data-theme="dark"] .dx-act .d-cta{background:#4CC38A;color:#0B2417}
+@media (max-width:899px){
+  .dx-head{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"logo act" "ttl ttl";gap:1rem 1rem}
+  .dx-act{align-self:start}
+}
+@media (max-width:480px){.dx-act .d-cta{padding:.7rem 1rem;font-size:.95rem}}
+
+.dx-head h1{font-size:clamp(1.55rem,3.4vw,2.3rem);text-wrap:pretty}
+
+.ag-photo{display:block;width:96px;height:123px;object-fit:cover;border-radius:8px}
+.ag-photo.sm{width:48px;height:62px;margin-top:.3rem}
 </style>
 
-</head><body><section class="gate" id="gate" aria-labelledby="gate-h">
-  <div class="wrap">
-    <div class="brand">
-      <svg class="logo" viewBox="0 0 40 40" width="36" height="36" aria-hidden="true"><rect width="40" height="40" rx="11" fill="currentColor"/><g fill="none" stroke="var(--paper)" stroke-width="2" stroke-linecap="round"><circle cx="19" cy="21" r="9.5"/><path d="M9.5 21h19M19 11.5c-4.5 4-4.5 15 0 19M19 11.5c4.5 4 4.5 15 0 19"/></g><path d="M31 5.5l1.4 3.6 3.6 1.4-3.6 1.4L31 15.5l-1.4-3.6-3.6-1.4 3.6-1.4z" fill="var(--paper)"/></svg>
-      <b>Pensá Global</b>
-    </div>
-    <p class="eyebrow">La plataforma definitiva para internacionalistas y profesionales de alto impacto</p>
-    <h1 id="gate-h">¿Desde dónde nos visitás?</h1>
-    <p class="gate-lede">Cada país tiene sus propias universidades, becas y empleos. Elegí el tuyo y toda la página se adapta a él: si estás en Argentina, entrá a Argentina; si estás en México, a México.</p>
-    <div class="cty-grid" id="gateGrid"></div>
-    <p class="gate-note">Hoy podés entrar a Argentina. México y España llegan pronto.</p>
-    <div class="mrz" aria-hidden="true"><div id="gmrz1"></div><div id="gmrz2"></div></div>
-  </div>
-</section>
-
-<div id="app" hidden>
+</head><body><div id="app">
 <a class="skip" href="#explorer">Saltar a las oportunidades</a>
 <header class="top">
+<div class="subbar" id="subbar">
+  <button class="subbar-btn" id="subToggle" type="button" aria-expanded="false" aria-controls="subPanel"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 7l8.5 6 8.5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Suscribite para recibir oportunidades</span><svg class="subchev" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <div class="subpanel" id="subPanel" role="region" aria-label="Suscripción por mail" hidden>
+    <div class="wrap">
+      <h2 class="h2" id="sb-h">Recibí las nuevas oportunidades por mail</h2>
+      <p class="sub">Elegí uno o varios temas y te avisamos cuando haya novedades. Por ejemplo, solo Estudiar, o Estudiar y Cursos.</p>
+      <form class="sb-card" id="sbForm" novalidate>
+        <fieldset class="sb-cats"><legend>¿Qué querés recibir?</legend><div id="sbCats" class="sb-cats"></div></fieldset>
+        <div class="sb-row">
+          <input id="sbMail" type="email" inputmode="email" autocomplete="email" maxlength="120" placeholder="Tu mail" aria-label="Tu mail">
+          <input class="sb-hp" id="sbHp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn pill" id="sbBtn" type="submit">Suscribirme</button>
+        </div>
+        <p class="sb-msg" id="sbMsg" role="status" aria-live="polite"></p>
+        <p class="sb-note">Solo usamos tu mail para enviarte oportunidades. Podés pedir que te demos de baja cuando quieras, y no lo compartimos con nadie.</p>
+      </form>
+    </div>
+  </div>
+</div>
+
   <div class="wrap top-in">
     <div class="brand">
       <svg class="logo" viewBox="0 0 40 40" width="36" height="36" aria-hidden="true"><rect width="40" height="40" rx="11" fill="currentColor"/><g fill="none" stroke="var(--paper)" stroke-width="2" stroke-linecap="round"><circle cx="19" cy="21" r="9.5"/><path d="M9.5 21h19M19 11.5c-4.5 4-4.5 15 0 19M19 11.5c4.5 4 4.5 15 0 19"/></g><path d="M31 5.5l1.4 3.6 3.6 1.4-3.6 1.4L31 15.5l-1.4-3.6-3.6-1.4 3.6-1.4z" fill="var(--paper)"/></svg>
@@ -560,7 +685,6 @@ a.btn{text-decoration:none;display:inline-block}
       <input id="q" type="search" placeholder="Buscá becas, cursos, organismos…" aria-label="Buscar oportunidades" autocomplete="off">
       <button class="hs-btn" type="submit" aria-label="Buscar"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
     </form>
-    <button class="country-btn" id="changeCountry" type="button" aria-label="Cambiar de país"></button>
   </div>
 </header>
 
@@ -588,6 +712,7 @@ a.btn{text-decoration:none;display:inline-block}
       <p class="sub center">Oportunidades que cierran pronto y otras para arrancar hoy.</p>
       <div class="car" id="feat"></div>
       <div class="pager"><button class="pg-arrow" id="fPrev" type="button" aria-label="Anteriores"></button><div class="pg-dots" id="fDots"></div><button class="pg-arrow" id="fNext" type="button" aria-label="Siguientes"></button></div>
+      <p class="seeall"><button class="btn" type="button" data-to="explorer">Ver todas las oportunidades</button></p>
     </div>
   </section>
 
@@ -608,6 +733,9 @@ a.btn{text-decoration:none;display:inline-block}
       </nav>
       <div class="xmain">
       <div class="controls">
+        <div class="field"><label for="country">País</label>
+          <select id="country"></select>
+        </div>
         <div class="field"><label for="career">Carrera</label>
           <select id="career">
             <option value="rrii" selected>Relaciones Internacionales</option>
@@ -646,6 +774,8 @@ a.btn{text-decoration:none;display:inline-block}
 
   <section class="talents" id="talentos" aria-labelledby="tal-h">
     <div class="wrap">
+      <div class="duo">
+      <div class="duo-l">
       <div class="tal-head">
         <div>
           <p class="eyebrow">Talentos</p>
@@ -663,6 +793,20 @@ a.btn{text-decoration:none;display:inline-block}
           <button class="btn" type="submit">Enviar</button>
         </form>
       </div>
+      </div>
+      <aside class="duo-r" id="agregar" aria-labelledby="ag-h">
+        <h2 class="h2" id="ag-h">Quiero agregar una oportunidad</h2>
+        <p class="sub">¿Conocés una beca, un curso, una charla o un trabajo? Pegá el enlace o respondé preguntas cortas. Cada propuesta se revisa antes de publicarse.</p>
+        <div class="ag-chat" role="group" aria-label="Asistente para agregar una oportunidad">
+          <div class="ag-log" id="agLog" role="log" aria-live="polite"></div>
+          <div class="ag-qr" id="agQr"></div>
+          <form class="ag-form" id="agForm" autocomplete="off">
+            <input id="agIn" type="text" maxlength="400" placeholder="Escribí acá…" aria-label="Tu mensaje al asistente">
+            <button class="btn" type="submit">Enviar</button>
+          </form>
+        </div>
+      </aside>
+      </div>
       <div class="controls">
         <div class="field"><label for="talQ">Buscar</label><input id="talQ" type="search" placeholder="Nombre, área, país o idioma" autocomplete="off"></div>
         <div class="field"><label for="talArea">Área</label><select id="talArea"><option value="all">Todas</option></select></div>
@@ -670,45 +814,6 @@ a.btn{text-decoration:none;display:inline-block}
       </div>
       <p class="tal-count" id="talCount" aria-live="polite"></p>
       <ul class="tal-grid" id="talGrid"></ul>
-    </div>
-  </section>
-
-  <section class="agregar" id="agregar" aria-labelledby="ag-h">
-    <div class="wrap ag-wrap">
-      <div>
-        <h2 class="h2" id="ag-h">Quiero agregar una oportunidad</h2>
-        <p class="sub">¿Conocés una beca, un curso, una charla o un trabajo que le sirva a la comunidad? Contáselo al asistente. Te va haciendo preguntas cortas y arma la ficha por vos.</p>
-        <ul class="ag-points">
-          <li>Podés pegar el enlace y contarlo con tus palabras: el asistente detecta el enlace, la fecha y el tipo.</li>
-          <li>Antes de publicarse, cada propuesta se revisa. No se agrega nada sin aprobación.</li>
-          <li>Solo se aceptan enlaces que empiecen con https:// y que lleven a la fuente oficial.</li>
-        </ul>
-      </div>
-      <div class="ag-chat" role="group" aria-label="Asistente para agregar una oportunidad">
-        <div class="ag-log" id="agLog" role="log" aria-live="polite"></div>
-        <div class="ag-qr" id="agQr"></div>
-        <form class="ag-form" id="agForm" autocomplete="off">
-          <input id="agIn" type="text" maxlength="400" placeholder="Escribí acá…" aria-label="Tu mensaje al asistente">
-          <button class="btn" type="submit">Enviar</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <section class="subsc" id="suscribite" aria-labelledby="sb-h">
-    <div class="wrap">
-      <h2 class="h2" id="sb-h">Recibí las nuevas oportunidades por mail</h2>
-      <p class="sub">Elegí uno o varios temas y te avisamos cuando haya novedades. Por ejemplo, solo Estudiar, o Estudiar y Cursos.</p>
-      <form class="sb-card" id="sbForm" novalidate>
-        <fieldset class="sb-cats"><legend>¿Qué querés recibir?</legend><div id="sbCats" class="sb-cats"></div></fieldset>
-        <div class="sb-row">
-          <input id="sbMail" type="email" inputmode="email" autocomplete="email" maxlength="120" placeholder="Tu mail" aria-label="Tu mail">
-          <input class="sb-hp" id="sbHp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <button class="btn pill" id="sbBtn" type="submit">Suscribirme</button>
-        </div>
-        <p class="sb-msg" id="sbMsg" role="status" aria-live="polite"></p>
-        <p class="sb-note">Solo usamos tu mail para enviarte oportunidades. Podés pedir que te demos de baja cuando quieras, y no lo compartimos con nadie.</p>
-      </form>
     </div>
   </section>
 
@@ -1205,8 +1310,13 @@ a.btn{text-decoration:none;display:inline-block}
     $("#feat").innerHTML = featured().map(function(it){
       var d = daysLeft(it.v);
       var due = it.v && d >= 0 && d <= 30 ? '<span class="fdue">' + (isEv(it) ? (d === 0 ? "Es hoy" : d === 1 ? "Es mañana" : "En " + d + " días") : (d === 0 ? "Cierra hoy" : d === 1 ? "Cierra mañana" : "Cierra en " + d + " días")) + '</span>' : "";
-      return '<button class="fcard" type="button" data-open="' + ITEMS.indexOf(it) + '"><span class="fpic" style="' + cstyle(it.c) + '" aria-hidden="true">' + ico(it.c) + imgTag(it) + due + '</span>' +
-        '<span class="fbody"><span class="fk">' + esc(it.k) + '</span><span class="fo">' + esc(it.o) + '</span><span class="ft">' + esc(it.t) + '</span><span class="ftag">' + esc(CAT[it.c][0]) + '</span></span></button>';
+      var place = it.p && norm(it.p) !== norm(WHERE[it.w]) ? it.p + ", " + WHERE[it.w] : WHERE[it.w];
+      var when = it.v && d >= 0 ? (isEv(it) ? (d === 0 ? "Es hoy" : d === 1 ? "Es mañana" : "Es el " + it.v.txt) : (d === 0 ? "Cierra hoy" : d === 1 ? "Cierra mañana" : d <= 30 ? "Cierra en " + d + " días" : "Cierra el " + it.v.txt)) : "Fecha en la fuente";
+      return '<button class="fcard" type="button" style="' + cstyle(it.c) + '" data-open="' + ITEMS.indexOf(it) + '"><span class="olg" aria-hidden="true">' + ico(it.c) + imgTag(it) + '</span>' +
+        '<span class="ft">' + esc(it.t) + '</span><span class="fo">' + esc(it.o) + '</span>' +
+        '<span class="ftag"><i></i>' + esc(CAT[it.c][0]) + '</span>' +
+        '<span class="floc">' + ico("pin") + '<span>' + esc(place) + '</span></span>' +
+        '<span class="ffoot"><span' + (it.v && d >= 0 && d <= 7 ? ' class="soon"' : "") + '>' + esc(when) + '</span><span>' + esc(it.k) + '</span></span></button>';
     }).join("");
     var counts = {}; ITEMS.forEach(function(it){ counts[it.c] = (counts[it.c] || 0) + 1; });
     $("#tiles").innerHTML = Object.keys(CAT).filter(function(k){ return counts[k]; }).map(function(k){
@@ -1272,19 +1382,23 @@ a.btn{text-decoration:none;display:inline-block}
     var place = it.p && norm(it.p) !== norm(WHERE[it.w]) ? it.p + ", " + WHERE[it.w] : WHERE[it.w];
     var chips = '<span class="dchip dark">' + esc(CAT[it.c][0]) + '</span><span class="dchip">' + esc(WHERE[it.w]) + '</span>' + (it.w === "ON" ? '<span class="dchip">Online</span>' : "") + (it.v && d >= 0 && d <= 14 ? '<span class="dchip">' + (isEv(it) ? (d === 0 ? "Es hoy" : "Es en " + d + (d === 1 ? " día" : " días")) : (d === 0 ? "Cierra hoy" : "Cierra en " + d + (d === 1 ? " día" : " días"))) + '</span>' : "");
     var due = it.v ? '<p class="d-due"><span class="dot"></span>' + (isEv(it) ? "Se realiza hasta el " : "Abierto hasta el ") + '<b>' + it.v.txt + '</b></p>' : '<p class="d-due">' + (isEv(it) ? "Fecha y horario: consultalos" : "Fecha de cierre: consultala") + ' en la fuente oficial.</p>';
+    var soon = it.v && d >= 0 && d <= 14 ? (isEv(it) ? (d === 0 ? "Es hoy" : "Es en " + d + (d === 1 ? " día" : " días")) : (d === 0 ? "Cierra hoy" : "Cierra en " + d + (d === 1 ? " día" : " días"))) : "";
+    var fecha = it.v ? (isEv(it) ? "Hasta el " : "Cierra el ") + it.v.txt : "A confirmar en la fuente";
+    var stagesShort = stagesTxt.replace(/^Para: /, "").replace(/^./, function(c){ return c.toUpperCase(); });
     $("#dBody").innerHTML =
-      '<div class="d-main"><p class="d-kind" style="color:var(--stamp)">' + esc(it.k) + '</p><h1 id="dTitle">' + esc(it.t) + '</h1>' +
-      (it.o ? '<p class="d-by">Ofrecido por <b>' + esc(it.o) + '</b></p>' : "") +
-      (it.d ? '<p class="d-desc">' + esc(it.d) + '</p>' : "") + '<div class="d-chips">' + chips + '</div>' +
-      '<div class="d-tools"><button class="circ" id="dShare" type="button" aria-label="Compartir esta oportunidad">' + ico("share") + '</button>' +
-      '<button class="circ" id="dSave" type="button" aria-pressed="' + isSaved + '" aria-label="' + (isSaved ? "Quitar de guardados" : "Guardar") + '">' + ico("mark") + '</button></div></div>' +
-      '<aside class="d-card"><div class="d-pic" style="' + cstyle(it.c) + '" aria-hidden="true">' + ico(it.c) + imgTag(it) + '</div><ul class="d-facts">' +
-      '<li>' + ico("user") + '<span>' + esc(stagesTxt) + '</span></li>' +
-      '<li>' + ico("pin") + '<span>' + esc(place) + '</span></li>' +
-      (it.o ? '<li>' + ico("org") + '<span>' + esc(it.o) + '</span></li>' : "") +
-      '<li>' + ico("cal") + '<span>' + (it.v ? (isEv(it) ? "Hasta el " : "Cierra el ") + it.v.txt : "Fecha a confirmar en la fuente") + '</span></li></ul>' + due +
-      '<a class="d-cta" href="' + esc(it.u) + '" target="_blank" rel="noopener noreferrer">Ir a la fuente oficial</a>' +
-      '<p class="d-note">Confirmá requisitos y fechas en el sitio oficial antes de postular.</p></aside>';
+      '<header class="dx-head" style="' + cstyle(it.c) + '"><span class="olg big" aria-hidden="true">' + ico(it.c) + imgTag(it) + '</span><div class="dx-ttl">' +
+      '<p class="dx-kind"><span class="ftag"><i></i>' + esc(CAT[it.c][0]) + '</span>' + (soon ? '<span class="dx-soon">' + esc(soon) + '</span>' : "") + '</p>' +
+      '<h1 id="dTitle">' + esc(it.t) + '</h1>' + (it.o ? '<p class="d-by"><b>' + esc(it.o) + '</b></p>' : "") + '</div>' +
+      '<div class="dx-act"><button class="circ" id="dShare" type="button" aria-label="Compartir esta oportunidad">' + ico("share") + '</button>' +
+      '<button class="circ" id="dSave" type="button" aria-pressed="' + isSaved + '" aria-label="' + (isSaved ? "Quitar de guardados" : "Guardar") + '">' + ico("mark") + '</button>' +
+      '<a class="d-cta" href="' + esc(it.u) + '" target="_blank" rel="noopener noreferrer">Ir a la fuente oficial</a></div></header>' +
+      '<dl class="dx-strip">' +
+      '<div><dt>' + ico("user") + 'Para quién</dt><dd>' + esc(stagesShort) + '</dd></div>' +
+      '<div><dt>' + ico("pin") + 'Dónde</dt><dd>' + esc(place) + '</dd></div>' +
+      '<div><dt>' + ico("cal") + 'Fecha</dt><dd>' + esc(fecha) + '</dd></div>' +
+      '<div><dt>' + ico("org") + 'Tipo</dt><dd>' + esc(it.k) + '</dd></div></dl>' +
+      '<section class="dx-text">' + (it.d ? '<h2>Sobre esta oportunidad</h2><p>' + esc(it.d) + '</p>' : "") +
+      '<h2>Antes de postular</h2><p>' + (it.v ? "" : (isEv(it) ? "La fecha y el horario se consultan en la fuente. " : "La fecha de cierre se consulta en la fuente. ")) + 'Confirmá los requisitos y las fechas en el sitio oficial antes de postular.</p></section>';
     var el = $("#detail"); el.hidden = false; el.scrollTop = 0; document.body.style.overflow = "hidden";
     $("#dBack").focus();
     try { history.pushState({pg: 1}, ""); pushed = true; } catch(e) { pushed = false; }
@@ -1391,6 +1505,18 @@ a.btn{text-decoration:none;display:inline-block}
     if (/^fotos\/[\w.\-]+$/.test(u)) return u;
     return safeUrl(u);
   }
+  function photoUrl(t){
+    var m = String(t || "").match(/https?:\/\/[^\s]+/i); if (!m) return "";
+    var u = safeUrl(m[0]); if (!u || u.length > 500) return "";
+    if (/^https:\/\/drive\.google\.com\//.test(u)) {
+      var d = u.match(/\/file\/d\/([\w-]+)/) || u.match(/[?&]id=([\w-]+)/);
+      if (!d) return "";
+      return "https://drive.google.com/thumbnail?id=" + d[1] + "&sz=w600";
+    }
+    return u;
+  }
+  function notJpg(t){ var m = String(t || "").match(/https?:\/\/[^\s?#]+/i); return !!(m && /\.(png|webp|gif|bmp|svg|heic|heif|tiff?)$/i.test(m[0])); }
+  var JPG_MSG = "La foto tiene que estar en formato JPG (.jpg). Convertila a JPG y pegá el enlace de nuevo.";
   function parseCSV(t){
     var rows = [], row = [], f = "", q = false;
     for (var i = 0; i < t.length; i++) {
@@ -1514,7 +1640,7 @@ a.btn{text-decoration:none;display:inline-block}
   (function(){
     var log = $("#agLog"), qr = $("#agQr"), form = $("#agForm"), inp = $("#agIn");
     var D = {}, step = "intro", fin = false;
-    var ORDER = ["cat", "t", "o", "u", "w", "v", "d"];
+    var ORDER = ["cat", "t", "o", "u", "w", "v", "d", "i"];
     var KW = [["eventos", /congreso|charla|cumbre|webinar|seminario|jornada|conferencia/], ["becas", /\bbecas?\b|scholarship/], ["cursos", /curso|capacitaci|diplomatura|taller|certificaci|idioma/], ["empresas", /empresa|pasant|empleo|trabajo|vacante|puesto|laboral/], ["ong", /\bong\b|fundaci|voluntari/], ["organismos", /organismo|\bonu\b|\boea\b|unesco|naciones unidas/], ["estado", /cancill|ministerio|gobierno|isen/], ["think", /think tank|centro de estudios|instituto de investigaci/], ["estudiar", /carrera|licenciatura|maestr|posgrado|doctorado|universidad/]];
     var MES = {enero:1,febrero:2,marzo:3,abril:4,mayo:5,junio:6,julio:7,agosto:8,septiembre:9,setiembre:9,octubre:10,noviembre:11,diciembre:12};
     function say(who, text){ var m = document.createElement("div"); m.className = "ag-msg " + who; m.textContent = text; log.appendChild(m); log.scrollTop = log.scrollHeight; return m; }
@@ -1550,7 +1676,8 @@ a.btn{text-decoration:none;display:inline-block}
         u: ["Pegá el enlace oficial (tiene que empezar con https://).", []],
         w: ["¿Dónde se hace o a quién llega?", [["Argentina", "AR"], ["En el exterior", "EX"], ["Online", "ON"]]],
         v: ["¿Hasta cuándo? Escribí la fecha de cierre o del evento, por ejemplo 15/11/2026.", [["No tiene fecha", "-"]]],
-        d: ["Última pregunta: contá en una o dos frases de qué se trata (opcional).", [["Saltear", "-"]]]
+        d: ["Contá en una o dos frases de qué se trata (opcional).", [["Saltear", "-"]]],
+        i: ["Última pregunta: ¿tiene foto o imagen (logo, afiche)? Es opcional.\n\nLa imagen no se sube acá: la mandás como un enlace, que es texto. Tiene que estar en formato JPG (.jpg).\n\nPara armarlo:\n1. Subí la imagen en JPG a tu Google Drive.\n2. Tocá Compartir y, en «Acceso general», elegí «Cualquier persona con el enlace».\n3. Copiá el enlace y pegalo acá, en el chat.", [["Saltear", "-"]]]
       }[missing];
       say("bot", Q[0]); chips(Q[1]);
     }
@@ -1569,22 +1696,35 @@ a.btn{text-decoration:none;display:inline-block}
         else { var dv = findDate(t); if (!dv) { say("bot", "No entendí la fecha. Probá con 15/11/2026 o elegí «No tiene fecha»."); return; } if (new Date(dv + "T23:59:59") < new Date()) { say("bot", "Esa fecha ya pasó. Las oportunidades vencidas no se publican. Revisá la fecha."); return; } D.v = dv; }
       }
       else if (step === "d") { D.d = val === "-" ? "" : clip(t, 300); }
+      else if (step === "i") {
+        if (val === "-") { D.i = ""; }
+        else {
+          if (notJpg(t)) { say("bot", "La imagen tiene que estar en formato JPG (.jpg). Convertila a JPG y pegá el enlace de nuevo."); return; }
+          var pu = photoUrl(t); if (!pu) { say("bot", "Pegá el enlace de la imagen (tiene que empezar con https://). Si es de Drive, que sea el enlace de un archivo y no de una carpeta. O tocá «Saltear»."); return; }
+          say("bot", "Revisando la imagen…");
+          var im = new Image(); im.referrerPolicy = "no-referrer";
+          im.onload = function(){ D.i = pu; say("bot", "Imagen cargada."); if (fin) { fin = false; } ask(); };
+          im.onerror = function(){ say("bot", "No pude ver esa imagen. Revisá que el enlace sea de una imagen JPG y que esté compartida con «Cualquier persona con el enlace». Probá de nuevo, o tocá «Saltear»."); };
+          im.src = pu; return;
+        }
+      }
       ask();
     }
     function proposalText(){
       var wl = D.p ? D.p + " (" + WHERE[D.w] + ")" : WHERE[D.w];
-      var row = [CAT[D.cat][0], CAT[D.cat][0], D.t, D.o, D.p || "", D.w, "ing,est,grad,exp", D.d || "", D.u, D.v || "", "", "ar"].join("\t");
-      return "Nueva oportunidad para Pensá Global\n\nTipo: " + CAT[D.cat][0] + "\nTítulo: " + D.t + "\nOrganización: " + D.o + "\nDónde: " + wl + "\nEnlace: " + D.u + "\nFecha: " + (D.v ? fmtDate(D.v) : "sin fecha") + "\nDescripción: " + (D.d || "-") + "\n\nFila para la planilla (categoría, tipo, título, organización, lugar, alcance, etapa, descripción, link, vence, aprobado, país):\n" + row;
+      var row = [CAT[D.cat][0], CAT[D.cat][0], D.t, D.o, D.p || "", D.w, "ing,est,grad,exp", D.d || "", D.u, D.v || "", "", "ar", D.i || ""].join("\t");
+      return "Nueva oportunidad para Pensá Global\n\nTipo: " + CAT[D.cat][0] + "\nTítulo: " + D.t + "\nOrganización: " + D.o + "\nDónde: " + wl + "\nEnlace: " + D.u + "\nFecha: " + (D.v ? fmtDate(D.v) : "sin fecha") + "\nDescripción: " + (D.d || "-") + "\nImagen: " + (D.i || "no") + "\n\nFila para la planilla (categoría, tipo, título, organización, lugar, alcance, etapa, descripción, link, vence, aprobado, país, imagen):\n" + row;
     }
     function summary(){
       step = "done"; qr.innerHTML = "";
       say("bot", "Listo, esto es lo que armé. Revisalo y, si está bien, enviá la propuesta.");
       var box = document.createElement("div"); box.className = "ag-sum";
-      [["Tipo", CAT[D.cat][0]], ["Título", D.t], ["Organización", D.o], ["Dónde", (D.p ? D.p + " · " : "") + WHERE[D.w]], ["Fecha", D.v ? fmtDate(D.v) : "Sin fecha"], ["Enlace", D.u]].concat(D.d ? [["Descripción", D.d]] : []).forEach(function(r){
+      [["Tipo", CAT[D.cat][0]], ["Título", D.t], ["Organización", D.o], ["Dónde", (D.p ? D.p + " · " : "") + WHERE[D.w]], ["Fecha", D.v ? fmtDate(D.v) : "Sin fecha"], ["Enlace", D.u]].concat(D.d ? [["Descripción", D.d]] : []).concat([["Imagen", D.i ? "" : "Sin imagen"]]).forEach(function(r){
         var line = document.createElement("div"); var b = document.createElement("b"); b.textContent = r[0] + ": "; var sp = document.createElement("span"); sp.textContent = r[1]; line.appendChild(b); line.appendChild(sp); box.appendChild(line);
       });
+      if (D.i) { var imgLine = box.lastChild, pic = document.createElement("img"); pic.src = D.i; pic.alt = "Imagen de la oportunidad"; pic.className = "ag-photo sm"; pic.referrerPolicy = "no-referrer"; imgLine.querySelector("span").appendChild(pic); }
       log.appendChild(box); log.scrollTop = log.scrollHeight;
-      chips([["Enviar para revisión", "send"], ["Copiar propuesta", "copy"], ["Empezar de nuevo", "reset"]]);
+      chips([["Cambiar imagen", "img2"], ["Enviar para revisión", "send"], ["Copiar propuesta", "copy"], ["Empezar de nuevo", "reset"]]);
       fin = true;
     }
     function copy(txt, ok){
@@ -1596,9 +1736,9 @@ a.btn{text-decoration:none;display:inline-block}
       var ep = safeUrl(OPP_ENDPOINT);
       if (ep) {
         say("bot", "Enviando tu propuesta…");
-        var pl = {categoria: CAT[D.cat][0], tipo: CAT[D.cat][0], titulo: D.t, organizacion: D.o, lugar: D.p || "", alcance: D.w, etapa: "ing,est,grad,exp", descripcion: D.d || "", link: D.u, vence: D.v || "", permiso: "si"};
+        var pl = {categoria: CAT[D.cat][0], tipo: CAT[D.cat][0], titulo: D.t, organizacion: D.o, lugar: D.p || "", alcance: D.w, etapa: "ing,est,grad,exp", descripcion: D.d || "", link: D.u, vence: D.v || "", imagen: D.i || "", permiso: "si"};
         fetch(ep, {method: "POST", mode: "no-cors", headers: {"Content-Type": "text/plain;charset=utf-8"}, body: JSON.stringify(pl)})
-          .then(function(){ qr.innerHTML = ""; say("bot", "Listo, recibimos tu propuesta. La revisamos y, si está todo bien, aparece en la página. Gracias por sumar."); })
+          .then(function(){ qr.innerHTML = ""; say("bot", "Recibimos tu propuesta. La revisamos y, si está todo bien, aparece en la página. Gracias por sumar."); })
           .catch(function(){ copy(txt, "Propuesta copiada"); say("bot", "No pudimos enviarla ahora, así que copié tu propuesta. Probá de nuevo más tarde."); });
         return;
       }
@@ -1635,6 +1775,8 @@ a.btn{text-decoration:none;display:inline-block}
       if (v === "send") { send(); return; }
       if (v === "copy") { copy(proposalText(), "Propuesta copiada"); return; }
       if (v === "reset") { reset(); return; }
+      if (v === "img2") { say("me", label); fin = false; step = "i"; say("bot", "Pegá el enlace de la nueva imagen en formato JPG (Google Drive compartido con «Cualquier persona con el enlace»), o tocá «Dejar la actual»."); chips([["Dejar la actual", "back"], ["Quitar imagen", "-"]]); return; }
+      if (v === "back") { say("me", label); summary(); return; }
       say("me", label); handle(label, v);
     });
     start();
@@ -1666,7 +1808,7 @@ a.btn{text-decoration:none;display:inline-block}
       var names = picked.indexOf("todo") > -1 ? ["Todos los temas"] : picked.map(function(k){ return CAT[k][0]; });
       if (!ready) {
         window.location.href = "mailto:" + inbox + "?subject=" + encodeURIComponent("Quiero recibir novedades de Pensá Global") + "&body=" + encodeURIComponent("Quiero recibir novedades por mail.\n\nMi mail: " + mail + "\nTemas: " + names.join(", "));
-        msg.textContent = "Se abrió tu programa de mail con tu pedido listo. Enviálo para quedar en la lista: " + names.join(", ") + ".";
+        msg.textContent = "Se abrió tu programa de mail con tu pedido listo. Envialo para quedar en la lista: " + names.join(", ") + ".";
         return;
       }
       var body = new URLSearchParams(); body.append(SUB_ENTRY_EMAIL, mail); names.forEach(function(n){ body.append(SUB_ENTRY_CATS, n); });
@@ -1677,15 +1819,38 @@ a.btn{text-decoration:none;display:inline-block}
     });
   })();
 
+
+  /* Barra de suscripción de arriba: abre y cierra el formulario */
+  (function(){
+    var b = $("#subToggle"), pn = $("#subPanel");
+    function set(o){ pn.hidden = !o; b.setAttribute("aria-expanded", String(o)); }
+    b.addEventListener("click", function(e){ e.stopPropagation(); set(pn.hidden); });
+    document.addEventListener("click", function(e){ if (!pn.hidden && !pn.contains(e.target)) set(false); });
+    document.addEventListener("keydown", function(e){ if (e.key === "Escape" && !pn.hidden) { set(false); b.focus(); } });
+  })();
+
   /* Asistente para sumarse como talento: arma la ficha y la manda por mail para que la revises y apruebes */
   (function(){
     var log = $("#tbLog"), qr = $("#tbQr"), form = $("#tbForm"), inp = $("#tbIn"), box = $("#talBot");
     var D = {}, step = "", fin = false, areasSel = [];
-    var ORDER = ["n", "h", "l", "s", "x", "a", "i", "li", "ok"];
+    var ORDER = ["n", "h", "l", "s", "x", "a", "i", "li", "f", "ok"];
     var AREAS = ["Política exterior", "Cooperación internacional", "Comercio exterior", "Derechos humanos", "Seguridad internacional", "Organismos internacionales", "Investigación", "Diplomacia"];
     function say(who, text){ var m = document.createElement("div"); m.className = "ag-msg " + who; m.textContent = text; log.appendChild(m); log.scrollTop = log.scrollHeight; }
     function chips(list){ qr.innerHTML = ""; list.forEach(function(c){ var b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = c[0]; b.setAttribute("data-v", c[1]); if (c[2]) b.setAttribute("aria-pressed", "true"); qr.appendChild(b); }); }
     function list(t, sep){ return String(t || "").split(sep).map(function(v){ return clip(v, 60); }).filter(Boolean); }
+    var PHOTO_HELP = "No pude ver esa foto. Revisá que el enlace sea de una imagen JPG y que esté compartida con «Cualquier persona con el enlace». Probá de nuevo, o tocá «Saltear».";
+    function checkPhoto(u){
+      say("bot", "Revisando la foto…");
+      var im = new Image(); im.referrerPolicy = "no-referrer";
+      im.onload = function(){
+        D.f = u;
+        var m = document.createElement("div"); m.className = "ag-msg me"; var pic = document.createElement("img"); pic.src = u; pic.alt = "Tu foto"; pic.className = "ag-photo"; pic.referrerPolicy = "no-referrer"; m.appendChild(pic); log.appendChild(m); log.scrollTop = log.scrollHeight;
+        say("bot", "Foto cargada.");
+        if (fin) { qr.innerHTML = ""; summary(); } else { ask(); }
+      };
+      im.onerror = function(){ say("bot", PHOTO_HELP); };
+      im.src = u;
+    }
     function ask(){
       var k = ORDER.filter(function(x){ return D[x] === undefined; })[0];
       step = k || "done"; if (!k) return summary();
@@ -1695,10 +1860,11 @@ a.btn{text-decoration:none;display:inline-block}
         l: ["¿Desde dónde? Ciudad y país, por ejemplo: Rosario, Argentina.", []],
         s: ["Contá en dos o tres frases qué estudiás o hacés y qué tipo de oportunidades te interesan.", []],
         x: ["¿Qué experiencia querés destacar? Separá cada una con punto y coma (;). Es opcional.", [["Saltear", "-"]]],
-        a: ["¿En qué áreas te interesa trabajar? Tocá las que quieras, o escribilas separadas por comas, y después «Listo».", AREAS.map(function(a){ return [a, "a:" + a, areasSel.indexOf(a) > -1]; }).concat([["Listo", "a-ok"]])],
+        a: ["¿En qué áreas te interesa trabajar? Tocá las que quieras, o escribilas separadas por comas, y después «Continuar».", AREAS.map(function(a){ return [a, "a:" + a, areasSel.indexOf(a) > -1]; }).concat([["Continuar", "a-ok"]])],
         i: ["¿Qué idiomas hablás? Separalos con comas, por ejemplo: Español, Inglés (avanzado).", []],
         li: ["Pegá el enlace de tu perfil de LinkedIn (https://www.linkedin.com/in/…). Es lo único de contacto que se muestra.", [["No tengo LinkedIn", "-"]]],
-        ok: ["Última pregunta. Tu ficha se publica solo después de una revisión, con el nombre, el titular y el resto de lo que me contaste, sin tu mail ni tu teléfono. ¿Das tu permiso para publicarla?", [["Sí, doy mi permiso", "yes"], ["No", "no"]]]
+        f: ["Ahora tu foto. Es opcional, pero ayuda a que te reconozcan.\n\nLa foto no se sube acá: la mandás como un enlace, que es texto. Tiene que estar en formato JPG (.jpg).\n\nPara armarlo:\n1. Subí la foto en JPG a tu Google Drive.\n2. Tocá Compartir y, en «Acceso general», elegí «Cualquier persona con el enlace».\n3. Copiá el enlace y pegalo acá, en el chat.\n\nPara que se vea bien: foto tuya sola, de frente y con la cara bien visible; buena luz y fondo simple; vertical o cuadrada; sin filtros ni lentes de sol.", [["Saltear", "-"]]],
+        ok: ["Última pregunta. Tu ficha se publica solo después de una revisión, con tu nombre, tu foto, el titular y el resto de lo que me contaste, sin tu mail ni tu teléfono. ¿Das tu permiso para publicarla?", [["Sí, doy mi permiso", "yes"], ["No", "no"]]]
       }[k];
       say("bot", Q[0]); chips(Q[1]);
     }
@@ -1711,43 +1877,52 @@ a.btn{text-decoration:none;display:inline-block}
       else if (step === "x") { D.x = v === "-" ? [] : list(t, /[;\n]/).slice(0, 5); }
       else if (step === "a") {
         if (v === "a-ok") { if (!areasSel.length) { say("bot", "Elegí al menos un área o escribila."); return; } D.a = areasSel.slice(0, 6); }
-        else if (v && v.indexOf("a:") === 0) { var a = v.slice(2), i = areasSel.indexOf(a); if (i > -1) areasSel.splice(i, 1); else areasSel.push(a); chips(AREAS.map(function(x){ return [x, "a:" + x, areasSel.indexOf(x) > -1]; }).concat([["Listo", "a-ok"]])); return; }
+        else if (v && v.indexOf("a:") === 0) { var a = v.slice(2), i = areasSel.indexOf(a); if (i > -1) areasSel.splice(i, 1); else areasSel.push(a); chips(AREAS.map(function(x){ return [x, "a:" + x, areasSel.indexOf(x) > -1]; }).concat([["Continuar", "a-ok"]])); return; }
         else { var typed = list(t, /,/); if (!typed.length) return; typed.forEach(function(x){ if (areasSel.indexOf(x) < 0) areasSel.push(x); }); D.a = areasSel.slice(0, 6); }
       }
       else if (step === "i") { var li = list(t, /,/).slice(0, 6); if (!li.length) { say("bot", "Escribí al menos un idioma."); return; } D.i = li; }
       else if (step === "li") { if (v === "-") D.li = ""; else { var u = safeUrl(t, "linkedin.com"); if (!u) { say("bot", "Ese enlace no es de LinkedIn. Tiene que empezar con https:// y ser de linkedin.com."); return; } D.li = u; } }
+      else if (step === "f") {
+        if (v === "-") { D.f = ""; }
+        else { if (notJpg(t)) { say("bot", JPG_MSG); return; } var pu = photoUrl(t); if (!pu) { say("bot", "Pegá el enlace de tu foto (tiene que empezar con https://). Si es de Drive, que sea el enlace de un archivo y no de una carpeta. O tocá «Saltear»."); return; } checkPhoto(pu); return; }
+      }
       else if (step === "ok") { if (v === "yes") D.ok = true; else { say("bot", "Está bien: sin tu permiso no publicamos nada. Si cambiás de idea, podés empezar de nuevo cuando quieras."); fin = true; chips([["Empezar de nuevo", "reset"]]); return; } }
       ask();
     }
     function textOut(){
-      var row = [D.n, "", D.h, D.l, D.s, (D.x || []).join("; "), (D.a || []).join(", "), (D.i || []).join(", "), D.li || "", ""].join("\t");
-      return "Nuevo talento para Pensá Global\n\nNombre: " + D.n + "\nTitular: " + D.h + "\nUbicación: " + D.l + "\nResumen: " + D.s + "\nExperiencia: " + ((D.x || []).join("; ") || "-") + "\nÁreas: " + (D.a || []).join(", ") + "\nIdiomas: " + (D.i || []).join(", ") + "\nLinkedIn: " + (D.li || "-") + "\nPermiso para publicar: sí\n\nFila para la planilla de talentos (nombre, foto, titular, ubicación, resumen, experiencia, áreas, idiomas, linkedin, aprobado):\n" + row;
+      var row = [D.n, D.f || "", D.h, D.l, D.s, (D.x || []).join("; "), (D.a || []).join(", "), (D.i || []).join(", "), D.li || "", ""].join("\t");
+      return "Nuevo talento para Pensá Global\n\nNombre: " + D.n + "\nTitular: " + D.h + "\nUbicación: " + D.l + "\nResumen: " + D.s + "\nExperiencia: " + ((D.x || []).join("; ") || "-") + "\nÁreas: " + (D.a || []).join(", ") + "\nIdiomas: " + (D.i || []).join(", ") + "\nLinkedIn: " + (D.li || "-") + "\nFoto: " + (D.f || "no") + "\nPermiso para publicar: sí\n\nFila para la planilla de talentos (nombre, foto, titular, ubicación, resumen, experiencia, áreas, idiomas, linkedin, aprobado):\n" + row;
     }
     function summary(){
       step = "done"; fin = true;
-      say("bot", "Listo, así quedaría tu ficha. Revisala y, si está bien, enviala para que la revisemos.");
+      say("bot", "Así quedaría tu ficha. Revisala y, si está bien, enviala para que la revisemos.");
       var card = document.createElement("div"); card.className = "ag-sum";
       [["Nombre", D.n], ["Titular", D.h], ["Ubicación", D.l], ["Resumen", D.s], ["Experiencia", (D.x || []).join(" · ") || "-"], ["Áreas", (D.a || []).join(", ")], ["Idiomas", (D.i || []).join(", ")], ["LinkedIn", D.li || "-"]].forEach(function(r){
         var line = document.createElement("div"), b = document.createElement("b"), sp = document.createElement("span"); b.textContent = r[0] + ": "; sp.textContent = r[1]; line.appendChild(b); line.appendChild(sp); card.appendChild(line);
       });
+      var pr = document.createElement("div"), pb = document.createElement("b"); pb.textContent = "Foto: "; pr.appendChild(pb);
+      if (D.f) { var pi = document.createElement("img"); pi.src = D.f; pi.alt = "Tu foto"; pi.className = "ag-photo sm"; pr.appendChild(pi); } else { var ps = document.createElement("span"); ps.textContent = "Sin foto"; pr.appendChild(ps); }
+      card.insertBefore(pr, card.children[1] || null);
       log.appendChild(card); log.scrollTop = log.scrollHeight;
-      chips([["Enviar para revisión", "send"], ["Copiar ficha", "copy"], ["Empezar de nuevo", "reset"]]);
+      chips([["Cambiar foto", "photo2"], ["Enviar para revisión", "send"], ["Copiar ficha", "copy"], ["Empezar de nuevo", "reset"]]);
     }
     function start(){ log.innerHTML = ""; D = {}; areasSel = []; fin = false; say("bot", "Hola, soy el asistente de Talentos. Te hago unas preguntas cortas y armo tu ficha. Nada se publica sin tu permiso y sin una revisión."); ask(); }
     form.addEventListener("submit", function(e){ e.preventDefault(); var t = inp.value.trim(); if (!t) return; inp.value = ""; say("me", t); if (fin) { say("bot", "Usá los botones de abajo, o «Empezar de nuevo»."); return; } handle(t); });
     qr.addEventListener("click", function(e){
       var b = e.target.closest("[data-v]"); if (!b) return; var v = b.getAttribute("data-v");
       if (v === "send" && safeUrl(TALENT_ENDPOINT)) {
-        var payload = {n:D.n, h:D.h, l:D.l, s:D.s, x:(D.x||[]).join("; "), a:(D.a||[]).join(", "), i:(D.i||[]).join(", "), li:D.li||"", permiso:"si"};
+        var payload = {n:D.n, h:D.h, l:D.l, s:D.s, x:(D.x||[]).join("; "), a:(D.a||[]).join(", "), i:(D.i||[]).join(", "), li:D.li||"", foto:D.f||"", permiso:"si"};
         say("bot", "Enviando tu ficha…");
         fetch(safeUrl(TALENT_ENDPOINT), {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(payload)})
-          .then(function(){ say("bot", "Listo, recibimos tu ficha. La revisamos y, si todo está bien, aparece en Talentos. Gracias por sumarte."); chips([]); })
+          .then(function(){ say("bot", "Recibimos tu ficha. La revisamos y, si todo está bien, aparece en Talentos. Gracias por sumarte."); chips([]); })
           .catch(function(){ say("bot", "No pudimos enviarla ahora. Probá de nuevo o copiá la ficha."); chips([["Reintentar", "send"], ["Copiar ficha", "copy"]]); });
         return;
       }
-      if (v === "send") { var mail = String(INBOX_EMAIL || "").trim(); window.location.href = "mailto:" + mail + "?subject=" + encodeURIComponent("Nuevo talento: " + D.n) + "&body=" + encodeURIComponent(textOut()); say("bot", "Se abrió tu programa de mail con la ficha lista. Enviála y la revisamos antes de publicarla. Gracias por sumarte."); return; }
+      if (v === "send") { var mail = String(INBOX_EMAIL || "").trim(); window.location.href = "mailto:" + mail + "?subject=" + encodeURIComponent("Nuevo talento: " + D.n) + "&body=" + encodeURIComponent(textOut()); say("bot", "Se abrió tu programa de mail con la ficha lista. Enviala y la revisamos antes de publicarla. Gracias por sumarte."); return; }
       if (v === "copy") { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(textOut()).then(function(){ toast("Ficha copiada"); }, function(){ toast("No se pudo copiar"); }); return; }
       if (v === "reset") { start(); return; }
+      if (v === "photo2") { fin = false; step = "f"; say("me", b.textContent); say("bot", "Pegá el enlace de tu nueva foto en formato JPG (Google Drive compartido con «Cualquier persona con el enlace»), o tocá «Dejar la actual»."); chips([["Dejar la actual", "back"], ["Quitar foto", "-"]]); return; }
+      if (v === "back") { say("me", b.textContent); qr.innerHTML = ""; fin = true; summary(); return; }
       if (v.indexOf("a:") !== 0 && v !== "a-ok") say("me", b.textContent);
       handle(b.textContent, v);
     });
@@ -1768,19 +1943,11 @@ a.btn{text-decoration:none;display:inline-block}
     return '<svg class="flag" viewBox="0 0 48 32" width="' + w + '" height="' + h + '" aria-hidden="true" focusable="false">' + (parts[code] || "") + '</svg>';
   }
   var FLAGBG = {ar:'linear-gradient(180deg,#74ACDF 0 34%,#fff 34% 66%,#74ACDF 66%)',mx:'linear-gradient(90deg,#006847 0 33%,#fff 33% 66%,#CE1126 66%)',es:'linear-gradient(180deg,#AA151B 0 25%,#F1BF00 25% 75%,#AA151B 75%)'};
-  var PHOTO = {ar:'argentina',mx:'mexico',es:'espana'};
-  function renderGate(){
-    $("#gateGrid").innerHTML = Object.keys(COUNTRIES).map(function(code){
+  function renderCountries(){
+    $("#country").innerHTML = Object.keys(COUNTRIES).map(function(code){
       var c = COUNTRIES[code];
-      var lines = '<span class="cty-lines">' + c.lines.map(function(l){return '<span>' + esc(l) + '</span>';}).join("") + '</span>';
-      var inner = '<span class="cty-pic" style="--f:'+(FLAGBG[code]||"")+'" aria-hidden="true"><i style="--ph:url(fotos/'+(PHOTO[code]||"x")+'.jpg)"></i></span><span class="cty-head">' + flagSvg(code, 48, 32) + '<span class="cty-state">' + (c.ready ? "Abierto" : "Próximamente") + '</span></span>' +
-        '<span class="cty-name">' + esc(c.name) + '</span><span class="cty-iso">' + esc(c.iso) + '</span>' +
-        '<span class="cty-who">' + esc(c.who) + '</span>' + lines +
-        '<span class="cty-go"><span>' + (c.ready ? "Ingresar a " + esc(c.name) : "En preparación") + '</span><span aria-hidden="true">' + "" + '</span></span>';
-      return c.ready ? '<button class="cty" type="button" data-c="' + code + '">' + inner + '</button>' : '<div class="cty soon" aria-disabled="true">' + inner + '</div>';
+      return '<option value="' + code + '"' + (c.ready ? '' : ' disabled') + '>' + esc(c.name) + (c.ready ? '' : ' (próximamente)') + '</option>';
     }).join("");
-    $("#gmrz1").textContent = pad("P<ARG<MEX<ESP<PENSAGLOBAL", 44);
-    $("#gmrz2").textContent = pad("ARG<ABIERTO<MEX<PROXIMO<ESP<PROXIMO", 44);
   }
   var booted = false;
   function enterCountry(code, remember){
@@ -1792,23 +1959,15 @@ a.btn{text-decoration:none;display:inline-block}
     $("#q").value = ""; $("#stage").value = "all"; $("#where").value = "all";
     $("#optLocal").textContent = c.name;
     $("#regLab").textContent = "Registro de oportunidades · " + c.name;
-    $("#changeCountry").innerHTML = flagSvg(code, 24, 16) + '<span>' + esc(c.name) + '</span><span class="swap">Cambiar</span>';
+    $("#country").value = code;
     if (remember) { try { localStorage.setItem(CKEY, code); } catch(e) {} }
-    $("#gate").hidden = true; $("#app").hidden = false;
-    if (!booted) { drawStatic(); initTalents(); initHero(); booted = true; }
+    var first = !booted;
+    if (first) { drawStatic(); initTalents(); initHero(); booted = true; }
     drawMrz(); render(); drawHome();
     loadSheetItems(code);
-    window.scrollTo(0, 0);
+    if (first) window.scrollTo(0, 0);
   }
-  function showGate(){
-    try { localStorage.removeItem(CKEY); } catch(e) {}
-    $("#app").hidden = true; $("#gate").hidden = false;
-    window.scrollTo(0, 0);
-  }
-  $("#gateGrid").addEventListener("click", function(e){
-    var b = e.target.closest("[data-c]"); if (b) enterCountry(b.getAttribute("data-c"), true);
-  });
-  $("#changeCountry").addEventListener("click", showGate);
+  $("#country").addEventListener("change", function(){ enterCountry(this.value, true); });
 
   var contactMail = String(CONTACT_EMAIL || "").trim();
   if (/^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/.test(contactMail)) {
@@ -1816,10 +1975,10 @@ a.btn{text-decoration:none;display:inline-block}
     $("#contactLine").innerHTML = 'Contacto: <a href="mailto:' + esc(contactMail) + '">' + esc(contactMail) + '</a>';
   }
 
-  renderGate();
+  renderCountries();
   var savedCountry = "";
   try { savedCountry = localStorage.getItem(CKEY) || ""; } catch(e) {}
-  if (COUNTRIES[savedCountry] && COUNTRIES[savedCountry].ready) enterCountry(savedCountry, false);
+  enterCountry(COUNTRIES[savedCountry] && COUNTRIES[savedCountry].ready && DATA_BY_COUNTRY[savedCountry] ? savedCountry : "ar", false);
 })();
 </script>
 </body></html>
