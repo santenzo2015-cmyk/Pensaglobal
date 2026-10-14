@@ -505,6 +505,27 @@ a.btn{text-decoration:none;display:inline-block}
   -webkit-mask-image:linear-gradient(90deg,transparent 34%,#000 76%),linear-gradient(180deg,#000 55%,transparent 100%);-webkit-mask-composite:source-in;
   mask-image:linear-gradient(90deg,transparent 34%,#000 76%),linear-gradient(180deg,#000 55%,transparent 100%);mask-composite:intersect;opacity:.95}
 @media (max-width:719px){.gate::after{width:100%;aspect-ratio:850/476;opacity:.32;background:var(--photo,none) center/cover no-repeat;-webkit-mask-image:linear-gradient(180deg,#000 40%,transparent 100%);mask-image:linear-gradient(180deg,#000 40%,transparent 100%)}}
+
+/* categorías a la izquierda (computadora) */
+.xmain{min-width:0}
+@media (min-width:900px){.topics{display:none}}
+@media (min-width:900px){
+  .explorer .wrap{max-width:1240px}
+  .xgrid{display:grid;grid-template-columns:230px minmax(0,1fr);gap:2rem;align-items:start}
+  .side{position:sticky;top:5rem;max-height:calc(100vh - 6rem);overflow:auto;padding-right:.2rem}
+  .side .cats{flex-direction:column;flex-wrap:nowrap;gap:.3rem}
+  .side .chip{width:100%;justify-content:space-between;align-items:center;border-radius:10px;padding:.55rem .75rem;text-align:left}
+  .side .subcats{margin:.6rem 0 0 .8rem;padding-left:.6rem;border-left:2px solid var(--rule)}
+  .side .subcats .chip{font-size:.84rem}
+}
+
+.row-act .plus{width:2.4rem;height:2.4rem;border-radius:50%;border:1px solid var(--rule);background:var(--surface);color:var(--ink);font:500 1.4rem/1 var(--font-body,inherit);cursor:pointer;display:grid;place-items:center;padding:0;flex:none}
+.row-act .plus[aria-expanded="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.row-act .plus:focus-visible{outline:2px solid var(--indigo);outline-offset:2px}
+.rmore{margin-top:.5rem}
+.rmore[hidden]{display:none}
+.rmore .go{margin-top:.6rem}
+.row .org{margin-bottom:0}
 </style>
 
 </head><body><section class="gate" id="gate" aria-labelledby="gate-h">
@@ -580,8 +601,12 @@ a.btn{text-decoration:none;display:inline-block}
 
   <section class="explorer" id="explorer" aria-label="Oportunidades">
     <div class="wrap">
+      <div class="xgrid">
+      <nav class="side" aria-label="Categorías">
       <div class="cats" id="cats"></div>
       <div class="cats subcats" id="subcats" aria-label="Subtemas de Cursos" hidden></div>
+      </nav>
+      <div class="xmain">
       <div class="controls">
         <div class="field"><label for="career">Carrera</label>
           <select id="career">
@@ -614,6 +639,8 @@ a.btn{text-decoration:none;display:inline-block}
         <p id="count" aria-live="polite"></p>
       </div>
       <div id="list"></div>
+      </div>
+      </div>
     </div>
   </section>
 
@@ -730,13 +757,15 @@ a.btn{text-decoration:none;display:inline-block}
   var TALENT_ENDPOINT = "https://script.google.com/macros/s/AKfycbx2bL2t9kj1WmDOBVloopU1WP_tA-ZT12JaTtG07-cCYduDQ2LIwG0vKTPjTFvCPFU/exec";
   // ITEMS_CSV_URL: enlace de tu planilla de OPORTUNIDADES publicada como CSV. Si lo dejás vacío, se usan solo las de este archivo.
   // Las filas nuevas de la planilla se suman solas, sin volver a subir la página.
-  var ITEMS_CSV_URL = "";
+  var ITEMS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQTpVZVKR_-E-uu6g-4llkZQ6k6Nr7ezCl5iV0z0gxuRzHUj0WYuvSFrg2VwU10GYGSs8VpqQThvgdb/pub?gid=1664741316&single=true&output=csv";
   // CONTACT_EMAIL: tu mail público de contacto (opcional). Si queda vacío, no se muestra nada.
   var CONTACT_EMAIL = "";
   // INBOX_EMAIL: mail donde te llegan las propuestas (talentos, oportunidades, suscripciones). No se muestra en la página.
   var INBOX_EMAIL = "Santenzo2019@gmail.com";
   // OPP_FORM_URL: enlace a tu Formulario de Google para recibir propuestas de oportunidades (opcional). Si lo completás, el botón "Enviar" abre ese formulario.
   var OPP_FORM_URL = "";
+  // OPP_ENDPOINT: dirección (Apps Script) de la planilla de Convocatorias. Con eso el chat manda la propuesta directo a la planilla.
+  var OPP_ENDPOINT = "https://script.google.com/macros/s/AKfycbx2bL2t9kj1WmDOBVloopU1WP_tA-ZT12JaTtG07-cCYduDQ2LIwG0vKTPjTFvCPFU/exec";
   // Suscripción por mail: conectá un Formulario de Google. SUB_FORM_ACTION es la dirección que termina en /formResponse;
   // SUB_ENTRY_EMAIL y SUB_ENTRY_CATS son los códigos "entry.123456" de las preguntas Mail y Temas. Si queda vacío, el botón dice "Muy pronto".
   var SUB_FORM_ACTION = "", SUB_ENTRY_EMAIL = "", SUB_ENTRY_CATS = "";
@@ -760,8 +789,7 @@ a.btn{text-decoration:none;display:inline-block}
   var CKEY = "pensaglobal-pais";
 
   var CAT = {
-    estudiar:["Estudiar","EDU"], becas:["Becas","BEC"], cursos:["Cursos","CUR"], organismos:["Organismos","ORG"],
-    ong:["ONG","ONG"], empresas:["Empresas","EMP"], estado:["Estado","GOB"], think:["Think tanks","TNK"], eventos:["Congresos, cumbres y charlas","EVT"]
+    becas:["Becas","BEC"], empresas:["Empresas","EMP"], estudiar:["Estudiar","EDU"], cursos:["Cursos","CUR"], organismos:["Organismos","ORG"], ong:["ONG","ONG"], estado:["Estado","GOB"], think:["Think tanks","TNK"], eventos:["Congresos, cumbres y charlas","EVT"]
   };
   var IC = {
     estudiar:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5v4c0 1.5 3 3 6 3s6-1.500 6-3v-4"/>',
@@ -998,6 +1026,7 @@ a.btn{text-decoration:none;display:inline-block}
     $("#mrz2").textContent = pad("RRII<<" + parts.join("<"), 44);
   }
 
+  var openRows = new Set();
   function render(){
     var b = base();
     var counts = {}; b.forEach(function(it){counts[it.c] = (counts[it.c]||0) + 1;});
@@ -1050,13 +1079,15 @@ a.btn{text-decoration:none;display:inline-block}
       var idx = ITEMS.indexOf(it);
       var key = it.t + "|" + it.o;
       var isSaved = saved.has(key);
+      var isOpen = openRows.has(key);
       var place = it.p ? " · " + esc(it.p) : "";
       var stages = it.l.map(function(s){return STAGE[s];}).join(" · ");
       return '<li class="row">' +
         '<div class="row-meta"><span class="kind">' + esc(it.k) + '</span>' + (it.v ? '<span class="where">' + (it.c === "eventos" ? "Hasta el " : "Cierra el ") + it.v.txt + '</span>' : '') + '</div>' +
         '<div class="row-main"><div class="row-t" role="heading" aria-level="' + lvl + '"><button class="row-open" type="button" data-open="' + idx + '">' + esc(it.t) + '</button></div><p class="org">' + esc(it.o) + place + '</p>' +
-        '<p class="desc">' + esc(it.d) + '</p><p class="stages">' + esc(stages) + '</p></div>' +
-        '<div class="row-act"><a class="go" href="' + esc(it.u) + '" target="_blank" rel="noopener noreferrer">Ir a la fuente <span aria-hidden="true">↗</span></a>' +
+        '<div class="rmore" id="more' + idx + '"' + (isOpen ? '' : ' hidden') + '><p class="desc">' + esc(it.d) + '</p><p class="stages">' + esc(stages) + '</p>' +
+        '<a class="go" href="' + esc(it.u) + '" target="_blank" rel="noopener noreferrer">Ir a la fuente <span aria-hidden="true">↗</span></a></div></div>' +
+        '<div class="row-act"><button class="plus" type="button" data-more="' + idx + '" aria-expanded="' + isOpen + '" aria-controls="more' + idx + '" aria-label="' + (isOpen ? "Ver menos: " : "Ver más: ") + esc(it.t) + '"><span aria-hidden="true">' + (isOpen ? "−" : "+") + '</span></button>' +
         '<button class="save" type="button" data-i="' + idx + '" aria-pressed="' + isSaved + '" aria-label="' + (isSaved ? "Quitar de guardados: " : "Guardar: ") + esc(it.t) + '">' +
         '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button></div>' +
         '</li>';
@@ -1221,7 +1252,6 @@ a.btn{text-decoration:none;display:inline-block}
   $("#fPrev").addEventListener("click", function(){ featGo(-1); });
   $("#fNext").addEventListener("click", function(){ featGo(1); });
   $("#fDots").addEventListener("click", function(e){ var b = e.target.closest("[data-p]"); if (!b) return; var tr = $("#feat"); tr.scrollTo({left: Number(b.getAttribute("data-p")) * tr.clientWidth, behavior: reduceMotion ? "auto" : "smooth"}); });
-  $("#tiles").addEventListener("click", function(e){ var b = e.target.closest("[data-cat]"); if (b) goExplore(b.getAttribute("data-cat")); });
   $("#menuPop").addEventListener("click", function(e){ var b = e.target.closest("[data-cat]"); if (!b) return; $("#menu").open = false; goExplore(b.getAttribute("data-cat"), b.getAttribute("data-sub")); });
   document.addEventListener("click", function(e){ var m = $("#menu"); if (m.open && !m.contains(e.target)) m.open = false; });
   document.addEventListener("keydown", function(e){ if (e.key === "Escape" && $("#menu").open) { $("#menu").open = false; $("#menu summary").focus(); } });
@@ -1290,6 +1320,14 @@ a.btn{text-decoration:none;display:inline-block}
       else toast("No se pudo copiar el enlace");
     }
   });
+  document.addEventListener("click", function(e){
+    var m = e.target.closest("[data-more]"); if (!m) return;
+    var it = ITEMS[Number(m.getAttribute("data-more"))]; if (!it) return;
+    var key = it.t + "|" + it.o, box = document.getElementById("more" + m.getAttribute("data-more")); if (!box) return;
+    var open = box.hidden; box.hidden = !open;
+    if (open) openRows.add(key); else openRows.delete(key);
+    m.setAttribute("aria-expanded", String(open)); m.setAttribute("aria-label", (open ? "Ver menos: " : "Ver más: ") + it.t); m.firstChild.textContent = open ? "−" : "+";
+  });
   document.addEventListener("click", function(e){ var o = e.target.closest("[data-open]"); if (o) openDetail(Number(o.getAttribute("data-open"))); });
 
   function drawStatic(){
@@ -1304,6 +1342,7 @@ a.btn{text-decoration:none;display:inline-block}
     }).join("");
   }
 
+  $("#tiles").addEventListener("click", function(e){ var b = e.target.closest("[data-cat]"); if (b) goExplore(b.getAttribute("data-cat")); });
   $("#cats").addEventListener("click", function(e){
     var b = e.target.closest("[data-cat]"); if (!b) return;
     state.cat = b.getAttribute("data-cat"); state.sub = "all"; render();
@@ -1554,6 +1593,15 @@ a.btn{text-decoration:none;display:inline-block}
     }
     function send(){
       var txt = proposalText(), mail = String(INBOX_EMAIL || CONTACT_EMAIL || "").trim(), formUrl = safeUrl(OPP_FORM_URL);
+      var ep = safeUrl(OPP_ENDPOINT);
+      if (ep) {
+        say("bot", "Enviando tu propuesta…");
+        var pl = {categoria: CAT[D.cat][0], tipo: CAT[D.cat][0], titulo: D.t, organizacion: D.o, lugar: D.p || "", alcance: D.w, etapa: "ing,est,grad,exp", descripcion: D.d || "", link: D.u, vence: D.v || "", permiso: "si"};
+        fetch(ep, {method: "POST", mode: "no-cors", headers: {"Content-Type": "text/plain;charset=utf-8"}, body: JSON.stringify(pl)})
+          .then(function(){ qr.innerHTML = ""; say("bot", "Listo, recibimos tu propuesta. La revisamos y, si está todo bien, aparece en la página. Gracias por sumar."); })
+          .catch(function(){ copy(txt, "Propuesta copiada"); say("bot", "No pudimos enviarla ahora, así que copié tu propuesta. Probá de nuevo más tarde."); });
+        return;
+      }
       if (formUrl) { copy(txt, "Copiado. Pegalo en el formulario"); window.open(formUrl, "_blank", "noopener"); say("bot", "Abrí el formulario en otra pestaña y pegá tu propuesta ahí. Gracias por sumar. La revisamos antes de publicarla."); }
       else if (mail) { window.location.href = "mailto:" + mail + "?subject=" + encodeURIComponent("Nueva oportunidad: " + D.t) + "&body=" + encodeURIComponent(txt); say("bot", "Se abrió tu programa de mail con la propuesta lista. Mandala y la revisamos antes de publicarla. Gracias por sumar."); }
       else { copy(txt, "Propuesta copiada"); say("bot", "Todavía no hay una casilla de recepción conectada en esta página, así que copié tu propuesta. Mandásela a quien administra Pensá Global. Gracias por sumar."); }
