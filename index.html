@@ -1918,7 +1918,8 @@ a.btn{text-decoration:none;display:inline-block}
   /* Suscripción por mail: guarda mail + temas en tu Formulario de Google (queda en tu planilla) */
   (function(){
     var box = $("#sbCats"), f = $("#sbForm"), msg = $("#sbMsg"), btn = $("#sbBtn");
-    var ready = !!(safeUrl(SUB_FORM_ACTION) && SUB_ENTRY_EMAIL && SUB_ENTRY_CATS);
+    var epSub = safeUrl(TALENT_ENDPOINT || OPP_ENDPOINT);
+    var ready = !!(epSub || (safeUrl(SUB_FORM_ACTION) && SUB_ENTRY_EMAIL && SUB_ENTRY_CATS));
     var keys = Object.keys(CAT);
     box.innerHTML = '<label class="sb-cat"><input type="checkbox" value="todo"><span>Todos los temas</span></label>' + keys.map(function(k){
       return '<label class="sb-cat"><input type="checkbox" value="' + k + '"><span>' + esc(CAT[k][0]) + '</span></label>';
@@ -1942,6 +1943,14 @@ a.btn{text-decoration:none;display:inline-block}
       if (!ready) {
         window.location.href = "mailto:" + inbox + "?subject=" + encodeURIComponent("Quiero recibir novedades de Pensá Global") + "&body=" + encodeURIComponent("Quiero recibir novedades por mail.\n\nMi mail: " + mail + "\nTemas: " + names.join(", "));
         msg.textContent = "Se abrió tu programa de mail con tu pedido listo. Envialo para quedar en la lista: " + names.join(", ") + ".";
+        return;
+      }
+      if (epSub) {
+        btn.disabled = true; msg.textContent = "Enviando…";
+        var temas = picked.indexOf("todo") > -1 ? ["todo"] : picked;
+        fetch(epSub, {method: "POST", mode: "no-cors", headers: {"Content-Type": "text/plain;charset=utf-8"}, body: JSON.stringify({suscribir: true, email: mail, temas: temas, carrera: CUR_CAREER, permiso: "si"})}).then(function(){
+          msg.textContent = "Listo, ya estás en la lista: " + names.join(", ") + ". Te vamos a mandar un solo mail con las novedades."; f.reset(); btn.disabled = false;
+        }, function(){ msg.textContent = "No se pudo enviar. Probá de nuevo en un rato."; btn.disabled = false; });
         return;
       }
       var body = new URLSearchParams(); body.append(SUB_ENTRY_EMAIL, mail); names.forEach(function(n){ body.append(SUB_ENTRY_CATS, n); });
