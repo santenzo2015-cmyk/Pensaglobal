@@ -299,6 +299,22 @@ a.btn{text-decoration:none;display:inline-block}
 .hero-art[data-photo="0"] .hp0,.hero-art[data-photo="1"] .hp1,.hero-art[data-photo="2"] .hp2{opacity:1;transform:none}
 .hero-art.photo .ha,.hero-art.photo .hc1,.hero-art.photo .hc2,.hero-art.photo .hc3{opacity:0;transform:scale(.94)}
 .hero-art[data-photo="0"] .p0,.hero-art[data-photo="1"] .p1,.hero-art[data-photo="2"] .p2{opacity:1}
+
+/* Talentos en el inicio: fotos, nombre y a qué se dedica, rotando */
+.ht{position:absolute;display:block;border-radius:20px;overflow:hidden;background:var(--tint);box-shadow:var(--shadow);opacity:0;transform:scale(.94);pointer-events:none;transition:opacity 300ms ease,transform 300ms var(--ease-out)}
+.ht1{left:0;top:3%;width:41%;height:50%}.ht2{left:31%;top:40%;width:41%;height:58%}.ht3{left:75%;top:8%;width:25%;height:33%}.ht4{left:73%;top:48%;width:27%;height:36%}
+.hero-art.tal .ht{opacity:1;transform:none}
+.hero-art.tal .ha,.hero-art.tal .hc1,.hero-art.tal .hc2,.hero-art.tal .hc3{opacity:0;transform:scale(.94)}
+.ht-in{position:absolute;inset:0;transition:opacity 350ms ease}
+.ht-in.out{opacity:0}
+.ht-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:2.6rem;color:var(--indigo);background:var(--tint)}
+.ht-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ht-tx{position:absolute;left:0;right:0;bottom:0;padding:1.6rem .7rem .6rem;color:#fff;background:linear-gradient(to top,rgba(10,20,30,.82),rgba(10,20,30,0));line-height:1.2}
+.ht-tx b{display:block;font-size:.92rem;font-weight:600}
+.ht-tx span{display:block;margin-top:.15rem;font-size:.76rem;opacity:.92;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ht3 .ht-ph,.ht4 .ht-ph{font-size:1.7rem}.ht3 .ht-tx,.ht4 .ht-tx{padding:1.2rem .45rem .45rem}.ht3 .ht-tx b,.ht4 .ht-tx b{font-size:.78rem}.ht3 .ht-tx span,.ht4 .ht-tx span{font-size:.66rem;-webkit-line-clamp:2}
+@media (max-width:600px){.ht3 .ht-tx span,.ht4 .ht-tx span{-webkit-line-clamp:1}.ht3 .ht-tx b,.ht4 .ht-tx b{font-size:.7rem}}
+@media (prefers-reduced-motion:reduce){.ht,.ht-in{transition:none}}
 .hero-art-wrap{position:relative;width:100%;max-width:540px;margin-left:auto}
 .hero-art-wrap .hero-art{max-width:none;margin:0}
 .art-go{position:absolute;inset:0;z-index:2;padding:0;border:0;border-radius:26px;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -711,7 +727,7 @@ a.btn{text-decoration:none;display:inline-block}
         <button class="btn pill" id="heroBtn" type="button">Empezá a explorar <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
       <div class="hero-art-wrap"><div class="hero-art" aria-hidden="true">
-        <i class="ha ha1"></i><i class="ha ha2"></i><i class="ha ha3"></i><i class="ha ha4"></i>
+        <i class="ha ha1"></i><i class="ha ha2"></i><i class="ha ha3"></i><i class="ha ha4"></i><div class="ht ht1"></div><div class="ht ht2"></div><div class="ht ht3"></div><div class="ht ht4"></div>
         <i class="hp hp0"></i><i class="hp hp1"></i><i class="hp hp2"></i><span class="hchip hc1">Becas</span><span class="hchip hpc hpc1 p1">Becas</span><span class="hchip hpc hpc2 p1">Estudiar afuera</span><span class="hchip hpc hpc1 p0">Estudios</span><span class="hchip hpc hpc2 p0">Empleos</span><span class="hchip hpc hpc1 p2">Organismos</span><span class="hchip hpc hpc2 p2">Dónde trabajar</span><span class="hchip hc2">Estudios</span><span class="hchip hc3">Empleos</span>
       </div>
       <button class="art-go" id="artGo" type="button" aria-label="Ver becas" hidden></button></div>
@@ -1319,6 +1335,44 @@ a.btn{text-decoration:none;display:inline-block}
     $("#q").value = ""; $("#stage").value = "all"; $("#where").value = "all";
     render(); $("#explorer").scrollIntoView();
   }
+  /* Talentos rotando en el inicio */
+  var htStep = 0, htT = 0;
+  function htList(){
+    var l = (typeof T !== "undefined" && T.list) ? T.list.slice() : [];
+    if (l.length < 4 && career && career.talentExamples) {
+      career.talentExamples.forEach(function(o){ if (l.length < 4 && !l.some(function(x){ return x.n === o.n; })) { var t = toTalent(o); t.ex = true; l.push(t); } });
+    }
+    var extra = [{n:"Valentina Ejemplo", h:"Estudiante · Pasante en una organización"}, {n:"Martín Modelo", h:"Graduado · Consultor independiente"}], k = 0;
+    while (l.length < 4 && k < extra.length) { var e = toTalent(extra[k++]); e.ex = true; l.push(e); }
+    return l;
+  }
+  function htCard(t){
+    var ph = t.f ? '<img src="' + esc(t.f) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' : "";
+    return '<div class="ht-in"><div class="ht-ph" data-ini="' + esc(initials(t.n)) + '">' + (t.f ? ph : esc(initials(t.n))) + '</div><div class="ht-tx"><b>' + esc(t.n) + '</b>' + (t.h ? '<span>' + esc(t.h) + '</span>' : '') + '</div></div>';
+  }
+  function htDraw(swap){
+    var l = htList(); if (!l.length) return;
+    var cards = document.querySelectorAll(".ht");
+    cards.forEach(function(c, k){
+      var t = l[(htStep * 4 + k) % l.length];
+      function put(){ c.innerHTML = htCard(t); }
+      if (swap && c.firstChild) { setTimeout(function(){ var o = c.firstChild; if (o) o.classList.add("out"); setTimeout(put, 350); }, k * 300); } else put();
+    });
+  }
+  function htLoop(){
+    clearInterval(htT);
+    if (reduceMotion) return;
+    htT = setInterval(function(){
+      var art = document.querySelector(".hero-art");
+      var shown = art && art.classList.contains("tal") && !$("#app").hidden && $("#detail").hidden && !document.hidden;
+      if (!shown || heroHold || htList().length <= 4) return;
+      htStep++; htDraw(true);
+    }, 4500);
+  }
+  document.addEventListener("error", function(e){
+    var el = e.target;
+    if (el && el.tagName === "IMG" && el.parentNode && el.parentNode.classList.contains("ht-ph")) { var p = el.parentNode; p.textContent = p.getAttribute("data-ini") || ""; }
+  }, true);
   function showSlide(i, animate){
     slideI = (i + SLIDES.length) % SLIDES.length;
     var sl = SLIDES[slideI];
@@ -1327,7 +1381,7 @@ a.btn{text-decoration:none;display:inline-block}
     var ag = $("#artGo"); ag.hidden = !sl.go; if (sl.go) ag.setAttribute("aria-label", sl.go);
     var chs = sl.chips || ["Becas", "Estudios", "Empleos"];
     [".hc1", ".hc2", ".hc3"].forEach(function(q, k){ var c = document.querySelector(q); if (c) c.textContent = chs[k]; });
-    var art = document.querySelector(".hero-art"); art.classList.toggle("photo", !!sl.photo);
+    var art = document.querySelector(".hero-art"); art.classList.toggle("photo", !!sl.photo); art.classList.toggle("tal", sl.cat === "talentos"); if (sl.cat === "talentos") htDraw(false);
     if (sl.photo) art.setAttribute("data-photo", sl.photo); else art.removeAttribute("data-photo");
     $("#hDots").innerHTML = SLIDES.map(function(_, k){ return '<button class="pg-dot" type="button" data-s="' + k + '" aria-label="Ir al destacado ' + (k + 1) + '"' + (k === slideI ? ' aria-current="true"' : "") + '></button>'; }).join("");
     if (animate) heroTimer();
@@ -1701,7 +1755,7 @@ a.btn{text-decoration:none;display:inline-block}
     if (!list.length) { list = career.talentExamples.map(function(o){ var t = toTalent(o); t.ex = true; return t; }); ex = true; }
     T.list = list; T.area = "all"; T.lang = "all";
     $("#talNote").innerHTML = ex ? '<p class="tal-note">Estos perfiles son ejemplos con nombres ficticios. Desaparecen cuando se publica el primero real.</p>' : "";
-    fillSelects(); renderT();
+    fillSelects(); renderT(); htStep = 0; htDraw(false); htLoop();
   }
   $("#talQ").addEventListener("input", function(){ T.q = this.value; renderT(); });
   $("#talArea").addEventListener("change", function(){ T.area = this.value; renderT(); });
