@@ -493,6 +493,36 @@ a.btn{text-decoration:none;display:inline-block}
 .ag-form .btn{border-radius:999px;padding:.65rem 1.2rem}
 
 
+/* carrusel "Empezá por acá" dentro del héroe */
+.hero-feat{min-width:0;background:var(--surface);border:1px solid var(--rule);border-radius:20px;padding:1.2rem 1.2rem .9rem;box-shadow:var(--shadow)}
+.hf-h{font:700 1.4rem/1.2 var(--font-display);margin:0;color:var(--ink)}
+.hf-sub{margin:.25rem 0 .7rem;color:var(--ink-2);font-size:.92rem}
+.hero-feat .car{margin-inline:0;padding:.3rem .2rem .7rem;gap:1rem}
+.hero-feat .fcard{flex:0 0 100%}
+.hero-feat .pager{margin-top:.1rem}
+.hero-feat .seeall{margin-top:.5rem}
+/* menú: Explorá, Talentos y Agregar Oportunidad siempre en una misma fila */
+.nav .navb,.nav .menu summary{line-height:1.2}
+@media (max-width:899px){.nav{flex:1 1 100%}.nav .career-menu{flex:0 0 100%;margin-bottom:.2rem}}
+/* franja de talentos en el inicio */
+.tstrip{padding-block:1.6rem .6rem;background:var(--paper)}
+.ts-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.1rem}
+.ts-head .h2{margin:0;font-size:1.35rem}.ts-head .sub{margin:.3rem 0 0}
+.ts-more{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .9rem;font-size:.9rem;border:2px solid var(--indigo);border-radius:999px;background:none;color:var(--indigo);font:inherit;font-weight:700;cursor:pointer}
+.ts-more:hover{background:var(--indigo);color:var(--on-indigo)}
+.ts-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7rem;max-width:520px;margin:.2rem 0 1rem}
+.ts-card{position:relative;display:block;aspect-ratio:1/1;padding:0;border:1px solid var(--rule);border-radius:16px;overflow:hidden;background:var(--tint);box-shadow:var(--shadow);cursor:pointer;color:inherit;text-align:left;transition:transform 200ms var(--ease-out)}
+.ts-card:hover{transform:translateY(-3px)}
+.ts-card:focus-visible{outline:3px solid var(--indigo);outline-offset:3px}
+.ts-card .ht-tx{padding:1.2rem .5rem .45rem}.ts-card .ht-tx b{font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ts-card .ht-tx span{font-size:.68rem;-webkit-line-clamp:1}.ts-card .ht-ph{font-size:1.9rem}
+@media (max-width:720px){.ts-grid{grid-template-columns:repeat(4,1fr);gap:.5rem}.ts-card{border-radius:12px}.ts-card .ht-tx{padding:.8rem .3rem .3rem}.ts-card .ht-tx b{font-size:.66rem}.ts-card .ht-tx span{display:none}.ts-card .ht-ph{font-size:1.3rem}}
+/* menú: en el celular la carrera va con su nombre completo y las opciones debajo, alineadas a su izquierda */
+.nav{align-items:center}
+.nav .career-menu,.nav .menu,.nav .navb{margin:0}
+@media (max-width:899px){.top-in{position:relative}.nav{flex-wrap:wrap;row-gap:.35rem}.nav .career-menu{position:absolute;right:clamp(16px,4vw,40px);top:calc(.65rem + 27px);transform:translateY(-50%);z-index:3}.nav .career-menu .career-pop{left:auto;right:0}.nav > details.menu:not(.career-menu) > summary{margin-left:-.42rem}}
+@media (max-width:720px){.nav .career-menu{top:calc(.65rem + 22px)}.nav .career-btn{font-size:.82rem;padding:.4rem .7rem}.nav .career-k{display:none}}
+@media (max-width:520px){.nb-long{display:inline}}
+@media (max-width:520px){.nav{gap:0}.nav .navb,.nav .menu summary{font-size:.86rem;padding:.45rem .42rem}}
 /* logo */
 .brand{text-decoration:none}
 .logo-img{display:block;height:54px;width:auto}
@@ -514,7 +544,7 @@ a.btn{text-decoration:none;display:inline-block}
 .career-pop .cp-soon{font:500 .68rem var(--font-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2);border:1px solid var(--rule);border-radius:999px;padding:.1rem .5rem}
 .career-pop .cp-here{font:600 .68rem var(--font-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--stamp)}
 .career-k{display:none}
-@media (min-width:721px){.hs{flex-basis:200px;min-width:160px}.hs input{width:0}}
+@media (min-width:721px){.hs{flex-basis:140px;min-width:140px}.hs input{width:0}}
 /* suscripción arriba, siempre visible */
 .subbar{position:relative;background:var(--indigo);color:var(--on-indigo)}
 .subbar-btn{display:flex;align-items:center;justify-content:center;gap:.55rem;width:100%;padding:.5rem 1rem;background:none;border:0;color:inherit;font:inherit;font-weight:600;font-size:.9rem;cursor:pointer}
@@ -720,10 +750,10 @@ a.btn{text-decoration:none;display:inline-block}
       <details class="menu career-menu" id="careerMenu"><summary class="career-btn" aria-label="Elegir carrera"><span class="career-k">Carrera</span><span id="careerName">Relaciones Internacionales</span><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><div class="menu-pop career-pop" id="careerPop" role="menu"></div></details>
       <details class="menu" id="menu"><summary class="navb">Explorá <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><div class="menu-pop" id="menuPop"></div></details>
       <button class="navb" type="button" data-to="talentos">Talentos</button>
-      <button class="navb" type="button" data-to="agregar">Agregar</button>
+      <button class="navb" type="button" data-to="agregar">Agregar<span class="nb-long"> Oportunidad</span></button>
     </nav>
     <form class="hs" id="search" role="search">
-      <input id="q" type="search" placeholder="Buscá becas, cursos, organismos…" aria-label="Buscar oportunidades" autocomplete="off">
+      <input id="q" type="search" placeholder="Buscar…" aria-label="Buscar oportunidades" autocomplete="off">
       <button class="hs-btn" type="submit" aria-label="Buscar"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
     </form>
   </div>
@@ -735,33 +765,16 @@ a.btn{text-decoration:none;display:inline-block}
       <div class="hero-tx" id="heroTx">
         <h1 id="heroH">La plataforma definitiva para internacionalistas y profesionales de alto impacto</h1>
         <p class="lede" id="heroP">Dónde estudiar la carrera, cómo financiar un posgrado y qué organismos, ONG y empresas contratan. Cada resultado lleva a la fuente oficial.</p>
-        <button class="btn pill" id="heroBtn" type="button">Empezá a explorar <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="btn pill" id="heroBtn" type="button" hidden>Empezá a explorar <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
-      <div class="hero-art-wrap"><div class="hero-art" aria-hidden="true">
-        <i class="ha ha1"></i><i class="ha ha2"></i><i class="ha ha3"></i><i class="ha ha4"></i><div class="ht ht1"></div><div class="ht ht2"></div><div class="ht ht3"></div><div class="ht ht4"></div>
-        <i class="hp hp0"></i><i class="hp hp1"></i><i class="hp hp2"></i><span class="hchip hc1">Becas</span><span class="hchip hpc hpc1 p1">Becas</span><span class="hchip hpc hpc2 p1">Estudiar afuera</span><span class="hchip hpc hpc1 p0">Estudios</span><span class="hchip hpc hpc2 p0">Empleos</span><span class="hchip hpc hpc1 p2">Organismos</span><span class="hchip hpc hpc2 p2">Dónde trabajar</span><span class="hchip hc2">Estudios</span><span class="hchip hc3">Empleos</span>
+      <div class="hero-feat" id="heroFeat" aria-labelledby="feat-h">
+        <h2 class="hf-h" id="feat-h">Empezá por acá</h2>
+        <p class="hf-sub">Las que cierran o empiezan pronto y las últimas que se sumaron.</p>
+        <div class="car" id="feat"></div>
+        <div class="pager"><button class="pg-arrow" id="fPrev" type="button" aria-label="Anteriores"></button><div class="pg-dots" id="fDots"></div><button class="pg-arrow" id="fNext" type="button" aria-label="Siguientes"></button></div>
+        <p class="seeall" hidden><button class="btn" type="button" data-to="explorer">Ver todas las oportunidades</button></p>
       </div>
-      <button class="art-go" id="artGo" type="button" aria-label="Ver becas" hidden></button></div>
-      <div class="pager hero-pager"><button class="pg-arrow" id="hPrev" type="button" aria-label="Anterior"></button><div class="pg-dots" id="hDots"></div><button class="pg-arrow" id="hNext" type="button" aria-label="Siguiente"></button></div>
       <div class="mrz" hidden aria-hidden="true"><div id="mrz1"></div><div id="mrz2"></div></div>
-    </div>
-  </section>
-
-  <section class="feat" aria-labelledby="feat-h">
-    <div class="wrap">
-      <h2 class="h2 center" id="feat-h">Empezá por acá</h2>
-      <p class="sub center">Oportunidades que cierran pronto y otras para arrancar hoy.</p>
-      <div class="car" id="feat"></div>
-      <div class="pager"><button class="pg-arrow" id="fPrev" type="button" aria-label="Anteriores"></button><div class="pg-dots" id="fDots"></div><button class="pg-arrow" id="fNext" type="button" aria-label="Siguientes"></button></div>
-      <p class="seeall"><button class="btn" type="button" data-to="explorer">Ver todas las oportunidades</button></p>
-    </div>
-  </section>
-
-  <section class="topics" aria-labelledby="top-h">
-    <div class="wrap">
-      <h2 class="h2" id="top-h">Explorá por categoría</h2>
-      <p class="sub">Elegí qué buscás y te mostramos solo eso.</p>
-      <div class="tiles" id="tiles"></div>
     </div>
   </section>
 
@@ -822,6 +835,7 @@ a.btn{text-decoration:none;display:inline-block}
         </div>
         <div class="join" id="join"></div>
       </div>
+      <div class="ts-grid" id="tsGrid"><button class="ts-card" type="button" aria-label="Talento"></button><button class="ts-card" type="button" aria-label="Talento"></button><button class="ts-card" type="button" aria-label="Talento"></button><button class="ts-card" type="button" aria-label="Talento"></button></div>
       <div id="talNote"></div>
       <div class="ag-chat tal-bot" id="talBot" hidden role="group" aria-label="Asistente para sumarte como talento">
         <div class="ag-log" id="tbLog" role="log" aria-live="polite"></div>
@@ -845,13 +859,13 @@ a.btn{text-decoration:none;display:inline-block}
         </div>
       </aside>
       </div>
-      <div class="controls">
+      <div class="controls" hidden>
         <div class="field"><label for="talQ">Buscar</label><input id="talQ" type="search" placeholder="Nombre, área, país o idioma" autocomplete="off"></div>
         <div class="field"><label for="talArea">Área</label><select id="talArea"><option value="all">Todas</option></select></div>
         <div class="field"><label for="talLang">Idioma</label><select id="talLang"><option value="all">Todos</option></select></div>
       </div>
-      <p class="tal-count" id="talCount" aria-live="polite"></p>
-      <ul class="tal-grid" id="talGrid"></ul>
+      <p class="tal-count" id="talCount" aria-live="polite" hidden></p>
+      <ul class="tal-grid" id="talGrid" hidden></ul>
     </div>
   </section>
 
@@ -1156,7 +1170,7 @@ a.btn{text-decoration:none;display:inline-block}
     var cid = CUR_CAREER;
     sheetP.then(function(t){
       if (COUNTRY_CODE !== code || CUR_CAREER !== cid) return;
-      var extra = itemsFromCSV(t, code); if (!extra.length) return;
+      var extra = itemsFromCSV(t, code); if (!extra.length) return; extra.forEach(function(it){ it.nw = 1; });
       var keys = {}; extra.forEach(function(it){ keys[it.t + "|" + it.o] = 1; });
       ITEMS = ITEMS.filter(function(it){ return !keys[it.t + "|" + it.o]; }).concat(extra);
       ITEMS.forEach(function(it){ it.hay = norm([it.t,it.o,it.p,it.d,it.k,CAT[it.c][0]].join(" ")); });
@@ -1209,7 +1223,6 @@ a.btn{text-decoration:none;display:inline-block}
     Object.keys(CAT).forEach(function(k){
       chips += '<button class="chip" type="button" data-cat="' + k + '" aria-pressed="' + (state.cat===k) + '">' + esc(CAT[k][0]) + ' <span class="n">' + (counts[k]||0) + '</span></button>';
     });
-    chips += '<button class="chip" type="button" data-to="talentos">Talentos</button><button class="chip" type="button" data-to="agregar">Quiero agregar una oportunidad</button><button class="chip" type="button" data-to="suscribite">Novedades por mail</button>';
     $("#cats").innerHTML = chips;
 
     var sub = state.sub || "all";
@@ -1316,7 +1329,7 @@ a.btn{text-decoration:none;display:inline-block}
     if (heroReady) showSlide(slideI, false);
     $("#tal-h").textContent = t.talSecH; $("#talSub").textContent = t.talSub;
     $("#rutas-h").textContent = t.routesH; $("#studySub").textContent = t.studySub;
-    $("#careerName").textContent = t.name;
+    $("#careerName").textContent = t.name; $("#careerName").setAttribute("data-short", t.name.replace("Relaciones Internacionales", "RR. II.").replace("Administración de Empresas", "Administración"));
     document.title = "Pensá Global · " + t.name;
     var cs = $("#career"); cs.innerHTML = CAREERS.map(function(c){ return '<option value="' + c.id + '"' + (c.ready ? "" : " disabled") + '>' + esc(c.name) + (c.ready ? "" : " (próximamente)") + '</option>'; }).join(""); cs.value = CUR_CAREER;
     renderCareerMenu();
@@ -1336,7 +1349,7 @@ a.btn{text-decoration:none;display:inline-block}
     state = {cat:"all", sub:"all", q:"", stage:"all", where:"all", onlySaved:false};
     $("#q").value = ""; $("#stage").value = "all"; $("#where").value = "all";
     T.q = ""; $("#talQ").value = "";
-    applyCareerText(); drawStatic(); drawMrz(); render(); drawHome(); applyTalents(); loadSheetItems(COUNTRY_CODE);
+    applyCareerText(); drawStatic(); drawMrz(); render(); drawHome(); applyTalents(); loadSheetItems(COUNTRY_CODE); $("#feat").scrollLeft = 0;
     var tb = $("#talBot"); if (tb) tb.hidden = true;
     var tj = $("#talJoin"); if (tj) tj.setAttribute("aria-expanded", "false");
     window.scrollTo(0, 0);
@@ -1363,23 +1376,30 @@ a.btn{text-decoration:none;display:inline-block}
   }
   function htDraw(swap){
     var l = htList(); if (!l.length) return;
-    var cards = document.querySelectorAll(".ht");
+    var cards = document.querySelectorAll(".ts-card");
     cards.forEach(function(c, k){
       var t = l[(htStep * 4 + k) % l.length];
-      function put(){ c.innerHTML = htCard(t); }
+      function put(){ c.innerHTML = htCard(t); c.setAttribute("data-li", t.li || ""); c.setAttribute("aria-label", t.n + (t.h ? ", " + t.h : "") + (t.li ? ". Abrir LinkedIn" : "")); c.style.cursor = t.li ? "pointer" : "default"; }
       if (swap && c.firstChild) { setTimeout(function(){ var o = c.firstChild; if (o) o.classList.add("out"); setTimeout(put, 350); }, k * 300); } else put();
     });
   }
+  var tsHold = false;
+  $("#tsGrid").addEventListener("click", function(e){
+    var c = e.target.closest(".ts-card"); if (!c) return;
+    var u = c.getAttribute("data-li"); if (u) window.open(u, "_blank", "noopener,noreferrer");
+  });
   function htLoop(){
     clearInterval(htT);
     if (reduceMotion) return;
     htT = setInterval(function(){
-      var art = document.querySelector(".hero-art");
-      var shown = art && art.classList.contains("tal") && !$("#app").hidden && $("#detail").hidden && !document.hidden;
-      if (!shown || heroHold || htList().length <= 4) return;
+      var g = $("#tsGrid"), r = g.getBoundingClientRect();
+      var shown = !$("#app").hidden && $("#detail").hidden && !document.hidden && r.bottom > 0 && r.top < innerHeight;
+      if (!shown || tsHold || htList().length <= 4) return;
       htStep++; htDraw(true);
     }, 4500);
   }
+  $("#tsGrid").addEventListener("mouseenter", function(){ tsHold = true; });
+  $("#tsGrid").addEventListener("mouseleave", function(){ tsHold = false; });
   document.addEventListener("error", function(e){
     var el = e.target;
     if (el && el.tagName === "IMG" && el.parentNode && el.parentNode.classList.contains("ht-ph")) { var p = el.parentNode; p.textContent = p.getAttribute("data-ini") || ""; }
@@ -1389,12 +1409,6 @@ a.btn{text-decoration:none;display:inline-block}
     var sl = SLIDES[slideI];
     $("#heroH").textContent = sl.h; $("#heroP").textContent = sl.p;
     $("#heroBtn").firstChild.nodeValue = sl.b + " ";
-    var ag = $("#artGo"); ag.hidden = !sl.go; if (sl.go) ag.setAttribute("aria-label", sl.go);
-    var chs = sl.chips || ["Becas", "Estudios", "Empleos"];
-    [".hc1", ".hc2", ".hc3"].forEach(function(q, k){ var c = document.querySelector(q); if (c) c.textContent = chs[k]; });
-    var art = document.querySelector(".hero-art"); art.classList.toggle("photo", !!sl.photo); art.classList.toggle("tal", sl.cat === "talentos"); if (sl.cat === "talentos") htDraw(false);
-    if (sl.photo) art.setAttribute("data-photo", sl.photo); else art.removeAttribute("data-photo");
-    $("#hDots").innerHTML = SLIDES.map(function(_, k){ return '<button class="pg-dot" type="button" data-s="' + k + '" aria-label="Ir al destacado ' + (k + 1) + '"' + (k === slideI ? ' aria-current="true"' : "") + '></button>'; }).join("");
     if (animate) heroTimer();
     if (animate) { var tx = $("#heroTx"); tx.classList.remove("in"); void tx.offsetWidth; tx.classList.add("in"); }
   }
@@ -1402,7 +1416,7 @@ a.btn{text-decoration:none;display:inline-block}
   var heroT = 0, heroHold = false, HERO_MS = 7000;
   function heroTimer(){
     clearTimeout(heroT);
-    if (reduceMotion || SLIDES.length < 2) return;
+    return; /* el título de la portada queda fijo */
     heroT = setTimeout(function(){
       var shown = !$("#app").hidden && $("#detail").hidden && !document.hidden;
       if (shown && !heroHold) showSlide(slideI + 1, true); else heroTimer();
@@ -1415,37 +1429,34 @@ a.btn{text-decoration:none;display:inline-block}
     hs.addEventListener("mouseleave", function(){ heroHold = false; heroTimer(); });
     hs.addEventListener("focusin", function(){ heroHold = true; });
     hs.addEventListener("focusout", function(){ heroHold = false; heroTimer(); });
-    $("#hPrev").innerHTML = arrowSvg(-1); $("#hNext").innerHTML = arrowSvg(1);
     $("#fPrev").innerHTML = arrowSvg(-1); $("#fNext").innerHTML = arrowSvg(1);
     showSlide(0, false);
-    $("#hPrev").addEventListener("click", function(){ showSlide(slideI - 1, true); });
-    $("#hNext").addEventListener("click", function(){ showSlide(slideI + 1, true); });
-    $("#hDots").addEventListener("click", function(e){ var b = e.target.closest("[data-s]"); if (b) showSlide(Number(b.getAttribute("data-s")), true); });
     function heroGo(){
       var c = SLIDES[slideI].cat;
       if (c === "talentos") { var t = document.getElementById("talentos"); if (t) t.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth"}); }
       else goExplore(c);
     }
     $("#heroBtn").addEventListener("click", heroGo);
-    $("#artGo").addEventListener("click", heroGo);
     heroTimer();
   }
   function isEv(it){ return it.c === "eventos"; }
   function daysLeft(v){ return v ? Math.ceil((v.d.getTime() - Date.now()) / 86400000) : null; }
   function featured(){
-    var withDate = ITEMS.filter(function(it){return it.v;}).sort(function(a, b){return a.v.d - b.v.d;}).slice(0, 4);
-    var out = withDate.slice(), keys = Object.keys(CAT), seen = {};
-    out.forEach(function(it){ seen[ITEMS.indexOf(it)] = 1; });
-    for (var round = 0; round < 2 && out.length < 10; round++) {
+    var out = [], seen = {};
+    function add(it){ var k = ITEMS.indexOf(it); if (k < 0 || seen[k]) return; seen[k] = 1; out.push(it); }
+    ITEMS.filter(function(it){ return it.v && daysLeft(it.v) >= 0; }).sort(function(a, b){ return a.v.d - b.v.d; }).slice(0, 5).forEach(add);
+    ITEMS.filter(function(it){ return it.nw; }).reverse().slice(0, 4).forEach(add);
+    var keys = Object.keys(CAT);
+    for (var round = 0; round < 2 && out.length < 8; round++) {
       keys.forEach(function(k){
         var n = 0;
         for (var i = 0; i < ITEMS.length; i++) {
           if (ITEMS[i].c !== k || seen[i]) continue;
-          if (n === round) { seen[i] = 1; out.push(ITEMS[i]); break; } n++;
+          if (n === round) { add(ITEMS[i]); break; } n++;
         }
       });
     }
-    return out.slice(0, 10);
+    return out.slice(0, 8);
   }
   function drawHome(){
     $("#feat").innerHTML = featured().map(function(it){
@@ -1460,9 +1471,6 @@ a.btn{text-decoration:none;display:inline-block}
         '<span class="ffoot"><span' + (it.v && d >= 0 && d <= 7 ? ' class="soon"' : "") + '>' + esc(when) + '</span><span>' + esc(it.k) + '</span></span></button>';
     }).join("");
     var counts = {}; ITEMS.forEach(function(it){ counts[it.c] = (counts[it.c] || 0) + 1; });
-    $("#tiles").innerHTML = Object.keys(CAT).filter(function(k){ return counts[k]; }).map(function(k){
-      return '<button class="tile" type="button" data-cat="' + k + '"><span class="ti" style="' + cstyle(k) + '" aria-hidden="true">' + ico(k) + '</span><b>' + esc(CAT[k][0]) + '</b><small>' + counts[k] + (counts[k] === 1 ? " oportunidad" : " oportunidades") + '</small></button>';
-    }).join("") + '<button class="tile" type="button" data-to="talentos"><span class="ti" style="--c1:#0E8F8A;--c2:#4CC9B0" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.8a3.5 3.5 0 0 1 0 6.4M18 14.4c2 .7 3.5 2.5 3.5 5.6"/></svg></span><b>Talentos</b><small>Perfiles de la carrera</small></button>';
     $("#menuPop").innerHTML = '<button type="button" data-cat="all"><span class="mi">' + ico("organismos") + '</span>Todo</button>' + Object.keys(CAT).filter(function(k){ return counts[k]; }).map(function(k){
       return '<button type="button" data-cat="' + k + '"><span class="mi">' + ico(k) + '</span>' + esc(CAT[k][0]) + '</button>' +
         (SUBS[k] ? '<button type="button" data-cat="' + k + '" data-sub="' + SUBS[k].key + '"><span class="mi">' + ico(k) + '</span>' + SUBS[k].label + '</button>' : "");
@@ -1479,7 +1487,7 @@ a.btn{text-decoration:none;display:inline-block}
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   function featGo(dir){ var tr = $("#feat"); tr.scrollBy({left: dir * tr.clientWidth * 0.85, behavior: reduceMotion ? "auto" : "smooth"}); }
   /* "Empezá por acá" avanza solo, una tarjeta por vez; vuelve al principio al llegar al final. Se frena con mouse/teclado encima, al tocarlo, con la pestaña oculta o con "reducir movimiento". */
-  var featHold = false, featUntil = 0, FEAT_MS = 4500;
+  var featHold = false, featUntil = 0, FEAT_MS = 3000;
   function featNext(){
     var tr = $("#feat"), card = tr.querySelector(".fcard"); if (!card) return;
     var step = card.getBoundingClientRect().width + (parseFloat(getComputedStyle(tr).columnGap) || 0);
@@ -1597,7 +1605,6 @@ a.btn{text-decoration:none;display:inline-block}
     }).join("");
   }
 
-  $("#tiles").addEventListener("click", function(e){ var b = e.target.closest("[data-cat]"); if (b) goExplore(b.getAttribute("data-cat")); });
   $("#cats").addEventListener("click", function(e){
     var b = e.target.closest("[data-cat]"); if (!b) return;
     state.cat = b.getAttribute("data-cat"); state.sub = "all"; render();
